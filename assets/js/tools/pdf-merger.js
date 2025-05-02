@@ -1,133 +1,59 @@
-// PDF Merger Tool Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const fileList = document.getElementById('fileList');
-    const mergeBtn = document.getElementById('mergeBtn');
-    const clearBtn = document.getElementById('clearBtn');
+// Updated pdf-merger.js with actual PDF merging (requires PDF-lib)
+document.addEventListener('DOMContentLoaded', async function() {
+    // Previous UI code remains the same...
     
-    let files = [];
-    
-    // Handle drag and drop
-    uploadArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadArea.classList.add('active');
-    });
-    
-    uploadArea.addEventListener('dragleave', () => {
-        uploadArea.classList.remove('active');
-    });
-    
-    uploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadArea.classList.remove('active');
-        
-        const droppedFiles = Array.from(e.dataTransfer.files).filter(file => 
-            file.type === 'application/pdf'
-        );
-        
-        if (droppedFiles.length > 0) {
-            files = [...files, ...droppedFiles];
-            updateFileList();
-        } else {
-            alert('Please only upload PDF files.');
-        }
-    });
-    
-    // Handle file input
-    fileInput.addEventListener('change', () => {
-        const selectedFiles = Array.from(fileInput.files);
-        files = [...files, ...selectedFiles];
-        updateFileList();
-        fileInput.value = '';
-    });
-    
-    // Update file list UI
-    function updateFileList() {
-        fileList.innerHTML = '';
-        
-        if (files.length === 0) {
-            mergeBtn.disabled = true;
-            clearBtn.disabled = true;
-            return;
-        }
-        
-        mergeBtn.disabled = false;
-        clearBtn.disabled = false;
-        
-        files.forEach((file, index) => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
-            
-            fileItem.innerHTML = `
-                <span>${file.name}</span>
-                <div class="file-actions">
-                    <button class="action-btn move-up" data-index="${index}">↑</button>
-                    <button class="action-btn move-down" data-index="${index}">↓</button>
-                    <button class="action-btn remove-file" data-index="${index}">×</button>
-                </div>
-            `;
-            
-            fileList.appendChild(fileItem);
-        });
-        
-        // Add event listeners to action buttons
-        document.querySelectorAll('.move-up').forEach(btn => {
-            btn.addEventListener('click', moveFileUp);
-        });
-        
-        document.querySelectorAll('.move-down').forEach(btn => {
-            btn.addEventListener('click', moveFileDown);
-        });
-        
-        document.querySelectorAll('.remove-file').forEach(btn => {
-            btn.addEventListener('click', removeFile);
-        });
-    }
-    
-    // File actions
-    function moveFileUp(e) {
-        const index = parseInt(e.target.dataset.index);
-        if (index > 0) {
-            [files[index], files[index - 1]] = [files[index - 1], files[index]];
-            updateFileList();
-        }
-    }
-    
-    function moveFileDown(e) {
-        const index = parseInt(e.target.dataset.index);
-        if (index < files.length - 1) {
-            [files[index], files[index + 1]] = [files[index + 1], files[index]];
-            updateFileList();
-        }
-    }
-    
-    function removeFile(e) {
-        const index = parseInt(e.target.dataset.index);
-        files.splice(index, 1);
-        updateFileList();
-    }
-    
-    // Clear all files
-    clearBtn.addEventListener('click', () => {
-        files = [];
-        updateFileList();
-    });
-    
-    // Merge PDFs (this would be replaced with actual PDF merging logic)
-    mergeBtn.addEventListener('click', () => {
+    // Updated merge functionality
+    mergeBtn.addEventListener('click', async () => {
         if (files.length < 2) {
             alert('Please add at least 2 PDF files to merge.');
             return;
         }
+
+        mergeBtn.disabled = true;
+        mergeBtn.textContent = 'Merging...';
         
-        // In a real implementation, you would use a PDF library here
-        alert('In a real implementation, this would merge the PDFs. Added files: ' + 
-              files.map(f => f.name).join(', '));
-        
-        // For a real implementation, you might use:
-        // 1. pdf-lib (https://pdf-lib.js.org/)
-        // 2. pdf.js (https://mozilla.github.io/pdf.js/)
-        // 3. Or a server-side solution if files are too large
+        try {
+            // Load PDF-lib dynamically
+            const { PDFDocument } = await import('https://cdn.jsdelivr.net/npm/pdf-lib@^1.16.0/dist/pdf-lib.min.js');
+            
+            const mergedPdf = await PDFDocument.create();
+            
+            for (const file of files) {
+                const fileBytes = await readFileAsArrayBuffer(file);
+                const pdfDoc = await PDFDocument.load(fileBytes);
+                const pages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                pages.forEach(page => mergedPdf.addPage(page));
+            }
+            
+            const mergedPdfBytes = await mergedPdf.save();
+            downloadPdf(mergedPdfBytes, 'merged-document.pdf');
+            
+        } catch (error) {
+            console.error('Error merging PDFs:', error);
+            alert('Error merging PDFs. Please try again.');
+        } finally {
+            mergeBtn.disabled = false;
+            mergeBtn.textContent = 'Merge PDFs';
+        }
     });
+    
+    // Helper functions
+    function readFileAsArrayBuffer(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(file);
+        });
+    }
+    
+    function downloadPdf(bytes, filename) {
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 });
