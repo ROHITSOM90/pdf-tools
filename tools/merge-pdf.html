@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDF - PDF Tools</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/components/header.css">
+    <link rel="stylesheet" href="../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../assets/css/components/cards.css">
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    <style>
+        .tool-container {
+            padding: 60px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-area.active {
+            border-color: var(--primary-color);
+            background-color: rgba(74, 107, 255, 0.05);
+        }
+        
+        .file-list {
+            margin-bottom: 30px;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            color: var(--danger-color);
+        }
+        
+        .tool-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.svg" alt="PDF Tools Logo">
+                <span>PDF Tools</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="#">All Tools</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
 
+    <main class="main-content">
+        <div class="tool-container">
+            <h1>Merge PDF Files</h1>
+            <p>Combine multiple PDFs into one document in seconds</p>
+            
+            <div class="upload-area" id="uploadArea">
+                <h3>Drag & Drop PDF Files Here</h3>
+                <p>or</p>
+                <input type="file" id="fileInput" accept=".pdf" multiple style="display: none;">
+                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                    Select PDF Files
+                </button>
+            </div>
+            
+            <div class="file-list" id="fileList">
+                <!-- Files will be added here dynamically -->
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn btn-primary" id="mergeBtn" disabled>
+                    Merge PDFs
+                </button>
+                <button class="btn btn-secondary" id="clearBtn" disabled>
+                    Clear All
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PDF Tools</h3>
+                    <p>Free online tools for all your PDF needs.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Facebook">👍</a>
+                        <a href="#" aria-label="GitHub">💻</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 PDF Tools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/tools/pdf-merger.js"></script>
+</body>
+</html>
