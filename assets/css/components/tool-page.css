@@ -123,3 +123,17 @@
         width: 100%;
     }
 }
+/* Tool page specific images */
+.file-upload-icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.page-thumbnail img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #eee;
+    margin-bottom: 5px;
+}
