@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../assets/css/components/header.css">
     <link rel="stylesheet" href="../assets/css/components/footer.css">
     <link rel="stylesheet" href="../assets/css/components/buttons.css">
-    <link rel="stylesheet" href="../assets/css/components/cards.css">
     <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
     <style>
         .tool-container {
@@ -19,19 +18,15 @@
         
         .upload-area {
             border: 2px dashed #ccc;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             padding: 40px;
             text-align: center;
             margin-bottom: 30px;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
         
-        .upload-area:hover {
-            border-color: var(--primary-color);
-        }
-        
-        .upload-area.active {
-            border-color: var(--primary-color);
+        .upload-area:hover, .upload-area.active {
+            border-color: #4a6bff;
             background-color: rgba(74, 107, 255, 0.05);
         }
         
@@ -44,10 +39,10 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 15px;
-            background-color: var(--white);
-            border-radius: var(--border-radius);
+            background-color: white;
+            border-radius: 8px;
             margin-bottom: 10px;
-            box-shadow: var(--box-shadow);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .file-actions {
@@ -59,12 +54,12 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: var(--secondary-color);
-            transition: var(--transition);
+            color: #6c757d;
+            transition: all 0.3s ease;
         }
         
         .action-btn:hover {
-            color: var(--danger-color);
+            color: #dc3545;
         }
         
         .tool-actions {
@@ -141,14 +136,6 @@
                         <li><a href="#">Terms of Service</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Connect</h3>
-                    <div class="social-links">
-                        <a href="#" aria-label="Twitter">🐦</a>
-                        <a href="#" aria-label="Facebook">👍</a>
-                        <a href="#" aria-label="GitHub">💻</a>
-                    </div>
-                </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2023 PDF Tools. All rights reserved.</p>
@@ -156,7 +143,6 @@
         </div>
     </footer>
 
-    <script src="../assets/js/main.js"></script>
     <script src="../assets/js/ui.js"></script>
     <script src="../assets/js/tools/pdf-merger.js"></script>
 </body>
