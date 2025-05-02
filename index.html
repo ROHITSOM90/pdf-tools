@@ -3,817 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online PDF tools: merge, split, compress, convert, edit, secure, and more. All the PDF tools you need in one place.">
-    <meta name="keywords" content="PDF tools, merge PDF, split PDF, compress PDF, convert PDF, edit PDF, free PDF tools">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval' 'unsafe-inline' blob: data:">
-    <title>PDF Tools - All-in-One Free PDF Converter and Editor</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #4a6cf7;
-            --secondary-color: #ff6b6b;
-            --accent-color: #6c63ff;
-            --text-color: #333;
-            --light-bg: #f8fafc;
-            --card-hover: #eef2ff;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        
-        .hero-gradient {
-            background: linear-gradient(135deg, #4a6cf7 0%, #6c63ff 100%);
-        }
-        
-        .tool-card {
-            transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            background-color: var(--card-hover);
-            border-color: var(--primary-color);
-        }
-        
-        .tool-icon {
-            color: var(--primary-color);
-            background-color: rgba(74, 108, 247, 0.1);
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: inline-flex;
-        }
-
-        .category-heading {
-            position: relative;
-            padding-bottom: 12px;
-        }
-        
-        .category-heading::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background-color: var(--primary-color);
-        }
-
-        .ad-container {
-            background-color: #f9fafb;
-            border: 1px dashed #d1d5db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .ad-container::before {
-            content: 'Advertisement';
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            color: #9ca3af;
-        }
-
-        @media (max-width: 768px) {
-            .tool-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .tool-grid {
-                grid-template-columns: repeat(1, 1fr);
-            }
-        }
-    </style>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <title>PDF Tools - Online PDF Editor & Converter</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components/header.css">
+    <link rel="stylesheet" href="assets/css/components/footer.css">
+    <link rel="stylesheet" href="assets/css/components/tools-grid.css">
+    <link rel="stylesheet" href="assets/css/components/cards.css">
+    <link rel="stylesheet" href="assets/css/components/buttons.css">
+    <link rel="stylesheet" href="assets/css/pages/home.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 </head>
-<body class="bg-white">
-    <!-- Header -->
-    <header class="sticky top-0 bg-white shadow-sm z-50">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <h1 class="text-xl font-bold text-blue-600 flex items-center">
-                        <i class="fas fa-file-pdf mr-2 text-red-500"></i>
-                        PDF Tools
-                    </h1>
-                </div>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#tools" class="text-gray-700 hover:text-blue-600">Tools</a>
-                    <a href="#features" class="text-gray-700 hover:text-blue-600">Features</a>
-                    <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
-                    <a href="#contact" class="text-gray-700 hover:text-blue-600">Contact</a>
-                </nav>
-                <button class="md:hidden text-gray-700" id="mobile-menu-button">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-            </div>
-            <div class="hidden md:hidden py-2" id="mobile-menu">
-                <a href="#tools" class="block py-2 text-gray-700 hover:text-blue-600">Tools</a>
-                <a href="#features" class="block py-2 text-gray-700 hover:text-blue-600">Features</a>
-                <a href="#about" class="block py-2 text-gray-700 hover:text-blue-600">About</a>
-                <a href="#contact" class="block py-2 text-gray-700 hover:text-blue-600">Contact</a>
-            </div>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.svg" alt="PDF Tools Logo">
+                <span>PDF Tools</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">All Tools</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-gradient text-white py-16 md:py-24">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-5xl font-bold mb-6">Every Tool You Need to Work with PDFs in One Place</h2>
-            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-10">All your PDF tools at your fingertips. Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks. 100% FREE and easy to use!</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#tools" class="bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300">
-                    Explore Tools
-                </a>
-                <a href="#features" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300">
-                    Learn More
-                </a>
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h1>Your Complete PDF Solution</h1>
+                <p>Merge, split, compress, and convert PDFs with our free online tools</p>
+                <a href="tools/merge-pdf.html" class="btn btn-primary">Try PDF Merger</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Ad Container (Top) -->
-    <div class="container mx-auto px-4 my-8">
-        <div class="ad-container">
-            <!-- Google AdSense Ad Unit -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                 data-ad-slot="XXXXXXXXXX"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </div>
-
-    <!-- Tools Overview Section -->
-    <section id="tools" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Our PDF Tools</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Comprehensive suite of PDF manipulation tools to handle all your document needs.
-                </p>
+        <section class="tools-section">
+            <div class="container">
+                <h2>Popular PDF Tools</h2>
+                <div class="tools-grid">
+                    <a href="tools/merge-pdf.html" class="tool-card">
+                        <div class="tool-icon">🔗</div>
+                        <h3>Merge PDF</h3>
+                        <p>Combine multiple PDF files into one document</p>
+                    </a>
+                    <a href="#" class="tool-card">
+                        <div class="tool-icon">✂️</div>
+                        <h3>Split PDF</h3>
+                        <p>Divide a PDF into multiple documents</p>
+                    </a>
+                    <a href="#" class="tool-card">
+                        <div class="tool-icon">📏</div>
+                        <h3>Compress PDF</h3>
+                        <p>Reduce PDF file size while maintaining quality</p>
+                    </a>
+                    <a href="#" class="tool-card">
+                        <div class="tool-icon">🔄</div>
+                        <h3>PDF to Word</h3>
+                        <p>Convert PDF files to editable Word documents</p>
+                    </a>
+                </div>
             </div>
+        </section>
 
-            <!-- Convert & Transform Category -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-8 category-heading">Convert & Transform</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 tool-grid">
-                    <!-- Convert to PDF Tools -->
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-file-word"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">WORD to PDF</h4>
-                        <p class="text-gray-600">Make DOC and DOCX files easy to read by converting them to PDF.</p>
+        <section class="features-section">
+            <div class="container">
+                <h2>Why Choose Our PDF Tools?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure Processing</h3>
+                        <p>All files are processed in your browser. No uploads to our servers.</p>
                     </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-file-powerpoint"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">POWERPOINT to PDF</h4>
-                        <p class="text-gray-600">Make PPT and PPTX slideshows easy to view by converting them to PDF.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Fast Processing</h3>
+                        <p>Quick results without waiting in queues.</p>
                     </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-file-excel"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">EXCEL to PDF</h4>
-                        <p class="text-gray-600">Make EXCEL spreadsheets easy to read by converting them to PDF.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">HTML to PDF</h4>
-                        <p class="text-gray-600">Convert webpages in HTML to PDF. Copy and paste the URL to convert with a click.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">JPG to PDF</h4>
-                        <p class="text-gray-600">Convert JPG images to PDF in seconds. Easily adjust orientation and margins.</p>
-                    </div>
-
-                    <!-- Convert from PDF Tools -->
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">PDF to WORD</h4>
-                        <p class="text-gray-600">Easily convert PDF files into editable DOC and DOCX documents with high accuracy.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-file-powerpoint"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">PDF to POWERPOINT</h4>
-                        <p class="text-gray-600">Turn your PDF files into easy to edit PPT and PPTX slideshows.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-table"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">PDF to EXCEL</h4>
-                        <p class="text-gray-600">Pull data straight from PDFs into Excel spreadsheets in a few short seconds.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-images"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">PDF to JPG</h4>
-                        <p class="text-gray-600">Convert each PDF page into a JPG or extract all images contained in a PDF.</p>
-                    </div>
-                    
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-archive"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">PDF to PDF/A</h4>
-                        <p class="text-gray-600">Transform your PDF to PDF/A, the ISO-standardized version for long-term archiving.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">💯</div>
+                        <h3>100% Free</h3>
+                        <p>No hidden charges or watermarks.</p>
                     </div>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <!-- Modify & Edit Category -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-8 category-heading">Modify & Edit</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 tool-grid">
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-object-group"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Merge PDF</h4>
-                        <p class="text-gray-600">Combine PDFs in the order you want with the easiest PDF merger available.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-object-ungroup"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Split PDF</h4>
-                        <p class="text-gray-600">Separate one page or a whole set for easy conversion into independent PDF files.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-compress-arrows-alt"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Compress PDF</h4>
-                        <p class="text-gray-600">Reduce file size while optimizing for maximal PDF quality.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-sync"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Rotate PDF</h4>
-                        <p class="text-gray-600">Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-crop-alt"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Crop PDF</h4>
-                        <p class="text-gray-600">Crop your PDF pages to remove unwanted margins or areas.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-list-ol"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Add Page Numbers</h4>
-                        <p class="text-gray-600">Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-stamp"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Add Watermark</h4>
-                        <p class="text-gray-600">Stamp an image or text over your PDF. Choose typography, transparency and position.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-edit"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Edit PDF</h4>
-                        <p class="text-gray-600">Add text, images, shapes or freehand annotations to a PDF document.</p>
-                    </div>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PDF Tools</h3>
+                    <p>Free online tools for all your PDF needs.</p>
                 </div>
-            </div>
-
-            <!-- Ad Container (Middle) -->
-            <div class="ad-container my-16">
-                <!-- Google AdSense Ad Unit -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                     data-ad-slot="XXXXXXXXXX"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-
-            <!-- Organize & Manage Category -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-8 category-heading">Organize & Manage</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 tool-grid">
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-minus-circle"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Remove Pages</h4>
-                        <p class="text-gray-600">Delete unwanted pages from your PDF document quickly and easily.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-copy"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Extract Pages</h4>
-                        <p class="text-gray-600">Pull out specific pages from your PDF to create a new document.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-sort"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Organize PDF</h4>
-                        <p class="text-gray-600">Sort pages of your PDF file however you like. Add or delete PDF pages with ease.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-not-equal"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Compare PDF</h4>
-                        <p class="text-gray-600">Show a side-by-side document comparison and spot changes between versions.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Security & Protection Category -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-8 category-heading">Security & Protection</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 tool-grid">
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-unlock-alt"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Unlock PDF</h4>
-                        <p class="text-gray-600">Remove PDF password security, giving you the freedom to use your PDFs as you want.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Protect PDF</h4>
-                        <p class="text-gray-600">Secure PDF files with a password. Prevent unauthorized access to your documents.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-signature"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Sign PDF</h4>
-                        <p class="text-gray-600">Sign yourself or request electronic signatures from others.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-marker"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Redact PDF</h4>
-                        <p class="text-gray-600">Redact text and graphics to permanently remove sensitive information from a PDF.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Enhancement & Recovery Category -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-8 category-heading">Enhancement & Recovery</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 tool-grid">
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Scan to PDF</h4>
-                        <p class="text-gray-600">Capture document scans from your mobile device and send them to your browser.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">OCR PDF</h4>
-                        <p class="text-gray-600">Easily convert scanned PDF into searchable and selectable documents.</p>
-                    </div>
-
-                    <div class="tool-card bg-white p-6 rounded-lg">
-                        <div class="tool-icon">
-                            <i class="fas fa-wrench"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Repair PDF</h4>
-                        <p class="text-gray-600">Repair a damaged PDF and recover data from corrupt PDF files with our Repair tool.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Key Features</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Why our PDF Tools is the best choice for all your document needs
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition duration-300">
-                    <div class="text-4xl text-blue-600 mb-4">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Fast Processing</h3>
-                    <p class="text-gray-700">Process your PDFs in seconds, not minutes. Our optimized tools work quickly to save you time.</p>
-                </div>
-
-                <div class="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition duration-300">
-                    <div class="text-4xl text-blue-600 mb-4">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Secure & Private</h3>
-                    <p class="text-gray-700">Files are processed on your device. We don't store your files or share them with third parties.</p>
-                </div>
-
-                <div class="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition duration-300">
-                    <div class="text-4xl text-blue-600 mb-4">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">High Quality</h3>
-                    <p class="text-gray-700">Our tools preserve the quality of your documents, ensuring the best possible output.</p>
-                </div>
-
-                <div class="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition duration-300">
-                    <div class="text-4xl text-blue-600 mb-4">
-                        <i class="fas fa-desktop"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Works Everywhere</h3>
-                    <p class="text-gray-700">Use our tools on any device with a web browser - desktop, tablet, or smartphone.</p>
-                </div>
-
-                <div class="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition duration-300">
-                    <div class="text-4xl text-blue-600 mb-4">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">100% Free</h3>
-                    <p class="text-gray-700">All our tools are completely free to use, with no hidden fees or subscriptions required.</p>
-                </div>
-
-                <div class="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition duration-300">
-                    <div class="text-4xl text-blue-600 mb-4">
-                        <i class="fas fa-user-friends"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Easy to Use</h3>
-                    <p class="text-gray-700">Our user-friendly interface makes working with PDFs simple, even for beginners.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Ad Container (Bottom) -->
-    <div class="container mx-auto px-4 my-8">
-        <div class="ad-container">
-            <!-- Google AdSense Ad Unit -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                 data-ad-slot="XXXXXXXXXX"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </div>
-
-    <!-- How It Works Section -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">How It Works</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Three simple steps to process your PDF files
-                </p>
-            </div>
-
-            <div class="flex flex-col md:flex-row justify-center items-center md:items-start space-y-8 md:space-y-0 md:space-x-8">
-                <div class="max-w-xs text-center">
-                    <div class="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
-                    <h3 class="text-xl font-bold mb-3">Upload Your File</h3>
-                    <p class="text-gray-700">Select the PDF file you want to work with from your device</p>
-                </div>
-
-                <div class="max-w-xs text-center">
-                    <div class="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
-                    <h3 class="text-xl font-bold mb-3">Choose Your Tool</h3>
-                    <p class="text-gray-700">Select the operation you want to perform on your PDF file</p>
-                </div>
-
-                <div class="max-w-xs text-center">
-                    <div class="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
-                    <h3 class="text-xl font-bold mb-3">Download Result</h3>
-                    <p class="text-gray-700">Get your processed PDF file ready for download immediately</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">What Our Users Say</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Thousands of users trust our PDF tools for their document needs
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
-                    <div class="text-yellow-400 flex mb-4">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-700 mb-4">"This PDF tool saved me so much time! I needed to merge several reports and compress them for email, and it was done in seconds. Highly recommended!"</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                            <span class="font-semibold text-blue-600">JD</span>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">John D.</h4>
-                            <p class="text-sm text-gray-600">Marketing Manager</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
-                    <div class="text-yellow-400 flex mb-4">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-700 mb-4">"The OCR feature is amazing! I had old scanned documents that I needed to make searchable, and this tool did it perfectly. Such a time-saver!"</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                            <span class="font-semibold text-blue-600">SM</span>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Sarah M.</h4>
-                            <p class="text-sm text-gray-600">Teacher</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
-                    <div class="text-yellow-400 flex mb-4">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-700 mb-4">"I use the PDF to Word conversion regularly for work, and the accuracy is impressive. The formatting stays intact, which is crucial for my documents."</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                            <span class="font-semibold text-blue-600">RL</span>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Robert L.</h4>
-                            <p class="text-sm text-gray-600">Business Analyst</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="about" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Get answers to common questions about our PDF tools
-                </p>
-            </div>
-
-            <div class="max-w-4xl mx-auto">
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-2">Are these tools really free?</h3>
-                    <p class="text-gray-700">Yes, all our PDF tools are 100% free to use. There are no hidden fees, subscriptions, or limits on the number of files you can process.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-2">Is my data secure when using these tools?</h3>
-                    <p class="text-gray-700">Absolutely. Your files are processed locally in your browser and are not uploaded to our servers. We do not store, share, or access your files in any way.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-2">Is there a file size limit?</h3>
-                    <p class="text-gray-700">Our tools can handle most PDF files up to 50MB in size. For larger files, you might need to split them first for optimal processing.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-2">Do I need to install any software?</h3>
-                    <p class="text-gray-700">No, our tools work directly in your web browser. You don't need to download or install any additional software to use them.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-2">How accurate are the conversion tools?</h3>
-                    <p class="text-gray-700">Our conversion tools use advanced algorithms to maintain high accuracy. The PDF to Word, Excel, and PowerPoint conversions typically maintain over 95% of the original formatting.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-2">Can I use these tools on my mobile device?</h3>
-                    <p class="text-gray-700">Yes, our website is fully responsive and works on desktops, tablets, and mobile phones with a modern web browser.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Have questions or suggestions? We'd love to hear from you.
-                </p>
-            </div>
-
-            <div class="max-w-3xl mx-auto">
-                <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
-                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Your name">
-                    </div>
-
-                    <div>
-                        <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Your email">
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
-                        <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Subject">
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-                        <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Your message"></textarea>
-                    </div>
-
-                    <div class="md:col-span-2 text-center">
-                        <button type="submit" class="bg-blue-600 text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition duration-300">Send Message</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">PDF Tools</h3>
-                    <p class="text-gray-400">
-                        The all-in-one platform for all your PDF needs. Free, easy to use, and secure.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#tools" class="text-gray-400 hover:text-white">Tools</a></li>
-                        <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white">About</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white">Contact</a></li>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
                     </ul>
                 </div>
-
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Popular Tools</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Merge PDF</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Split PDF</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">PDF to Word</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Compress PDF</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Follow Us</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white text-xl">
-                            <i class="fab fa-facebook-square"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white text-xl">
-                            <i class="fab fa-twitter-square"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white text-xl">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white text-xl">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Facebook">👍</a>
+                        <a href="#" aria-label="GitHub">💻</a>
                     </div>
                 </div>
             </div>
-
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <div class="footer-bottom">
                 <p>&copy; 2023 PDF Tools. All rights reserved.</p>
-                <div class="flex justify-center space-x-4 mt-2">
-                    <a href="#" class="hover:text-white">Privacy Policy</a>
-                    <a href="#" class="hover:text-white">Terms of Service</a>
-                    <a href="#" class="hover:text-white">Cookie Policy</a>
-                </div>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Close mobile menu when clicking on a link
-        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                document.getElementById('mobile-menu').classList.add('hidden');
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/ui.js"></script>
 </body>
 </html>
