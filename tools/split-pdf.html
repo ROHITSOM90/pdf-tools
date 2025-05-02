@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="split-pdf-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split PDF | PDF Tools</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/components/header.css">
+    <link rel="stylesheet" href="../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../assets/css/components/tool-page.css">
+    <link rel="stylesheet" href="../assets/css/components/file-upload.css">
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    <style>
+        .split-options {
+            margin-bottom: 30px;
+        }
+        
+        .option-group {
+            margin-bottom: 20px;
+        }
+        
+        .option-group h4 {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .range-inputs {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .range-inputs input {
+            width: 80px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+        }
+        
+        .page-preview {
+            margin-top: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            background-color: var(--light-color);
+        }
+        
+        .page-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .page-thumbnail {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px;
+            text-align: center;
+            background-color: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .page-thumbnail:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .page-thumbnail.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(74, 107, 255, 0.1);
+        }
+        
+        .page-number {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo.svg" alt="PDF Tools Logo">
+                <span>PDF Tools</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#all-tools">All Tools</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
 
+    <main class="main-content tool-page">
+        <div class="container">
+            <div class="tool-header">
+                <h1>Split PDF</h1>
+                <p>Divide your PDF into multiple separate files by pages or extract specific pages</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="file-upload-wrapper">
+                    <label for="fileInput" class="file-upload-label" id="uploadArea">
+                        <div class="file-upload-icon">
+                            <img src="../assets/images/icons/pdf-icon.svg" alt="PDF" width="48">
+                        </div>
+                        <div class="file-upload-text">Drag & Drop PDF file here</div>
+                        <div class="file-upload-hint">or click to browse files</div>
+                        <div class="file-upload-btn btn btn-outline">Select PDF</div>
+                    </label>
+                    <input type="file" id="fileInput" class="file-upload-input" accept=".pdf">
+                </div>
+                
+                <div class="split-options">
+                    <div class="option-group">
+                        <h4>Split Method</h4>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="splitMethod" value="range" checked>
+                                <span>Page range (e.g. 1-5, 8, 11-13)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="splitMethod" value="every">
+                                <span>Split every ___ pages</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="splitMethod" value="selected">
+                                <span>Select pages manually</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group" id="rangeOptions">
+                        <h4>Page Range</h4>
+                        <input type="text" id="pageRange" class="form-input" placeholder="e.g. 1-5, 8, 11-13">
+                    </div>
+                    
+                    <div class="option-group" id="everyOptions" style="display: none;">
+                        <h4>Split Every</h4>
+                        <div class="range-inputs">
+                            <input type="number" id="splitEvery" min="1" value="1" class="form-input">
+                            <span>pages</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="page-preview" id="pagePreview" style="display: none;">
+                    <h4>Document Preview</h4>
+                    <div class="page-thumbnails" id="pageThumbnails">
+                        <!-- Thumbnails will be generated here -->
+                    </div>
+                </div>
+                
+                <div class="tool-actions">
+                    <button class="btn btn-primary" id="splitBtn" disabled>
+                        Split PDF
+                    </button>
+                    <button class="btn btn-secondary" id="clearBtn" disabled>
+                        Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PDF Tools</h3>
+                    <p>Free online tools for all your PDF needs.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../index.html#all-tools">All Tools</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">
+                            <img src="../assets/images/icons/twitter-icon.svg" alt="Twitter">
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <img src="../assets/images/icons/facebook-icon.svg" alt="Facebook">
+                        </a>
+                        <a href="#" aria-label="GitHub">
+                            <img src="../assets/images/icons/github-icon.svg" alt="GitHub">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 PDF Tools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/tools/pdf-split.js"></script>
+</body>
+</html>
