@@ -23,7 +23,7 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="#">All Tools</a></li>
+                    <li><a href="#all-tools">All Tools</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
@@ -40,35 +40,212 @@
         <section class="hero">
             <div class="container">
                 <h1>Your Complete PDF Solution</h1>
-                <p>Merge, split, compress, and convert PDFs with our free online tools</p>
-                <a href="tools/merge-pdf.html" class="btn btn-primary">Try PDF Merger</a>
+                <p>Convert, edit, compress, and manage PDFs with our free online tools</p>
+                <div class="hero-actions">
+                    <a href="#all-tools" class="btn btn-primary">Explore Tools</a>
+                    <a href="tools/merge-pdf.html" class="btn btn-outline">Merge PDFs Now</a>
+                </div>
             </div>
         </section>
 
-        <section class="tools-section">
+        <section class="quick-tools">
             <div class="container">
-                <h2>Popular PDF Tools</h2>
-                <div class="tools-grid">
-                    <a href="tools/merge-pdf.html" class="tool-card">
-                        <div class="tool-icon">🔗</div>
-                        <h3>Merge PDF</h3>
-                        <p>Combine multiple PDF files into one document</p>
+                <h2>Quick Access Tools</h2>
+                <div class="quick-tools-grid">
+                    <a href="tools/merge-pdf.html" class="quick-tool-card">
+                        <img src="assets/images/icons/merge-icon.svg" alt="Merge PDF">
+                        <span>Merge PDF</span>
                     </a>
-                    <a href="#" class="tool-card">
-                        <div class="tool-icon">✂️</div>
-                        <h3>Split PDF</h3>
-                        <p>Divide a PDF into multiple documents</p>
+                    <a href="tools/word-to-pdf.html" class="quick-tool-card">
+                        <img src="assets/images/icons/word-icon.svg" alt="Word to PDF">
+                        <span>Word to PDF</span>
                     </a>
-                    <a href="#" class="tool-card">
-                        <div class="tool-icon">📏</div>
-                        <h3>Compress PDF</h3>
-                        <p>Reduce PDF file size while maintaining quality</p>
+                    <a href="tools/compress-pdf.html" class="quick-tool-card">
+                        <img src="assets/images/icons/compress-icon.svg" alt="Compress PDF">
+                        <span>Compress PDF</span>
                     </a>
-                    <a href="#" class="tool-card">
-                        <div class="tool-icon">🔄</div>
-                        <h3>PDF to Word</h3>
-                        <p>Convert PDF files to editable Word documents</p>
+                    <a href="tools/pdf-to-word.html" class="quick-tool-card">
+                        <img src="assets/images/icons/pdf-icon.svg" alt="PDF to Word">
+                        <span>PDF to Word</span>
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="all-tools" id="all-tools">
+            <div class="container">
+                <h2>All PDF Tools</h2>
+                <div class="tools-categories">
+                    <div class="category">
+                        <h3>Convert To PDF</h3>
+                        <div class="tools-grid">
+                            <a href="tools/word-to-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/word-icon.svg" alt="Word to PDF">
+                                </div>
+                                <h4>Word to PDF</h4>
+                                <p>Convert DOC/DOCX files to PDF</p>
+                            </a>
+                            <a href="tools/ppt-to-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/ppt-icon.svg" alt="PPT to PDF">
+                                </div>
+                                <h4>PowerPoint to PDF</h4>
+                                <p>Convert PPT/PPTX files to PDF</p>
+                            </a>
+                            <a href="tools/excel-to-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/excel-icon.svg" alt="Excel to PDF">
+                                </div>
+                                <h4>Excel to PDF</h4>
+                                <p>Convert XLS/XLSX files to PDF</p>
+                            </a>
+                            <a href="tools/jpg-to-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/image-icon.svg" alt="JPG to PDF">
+                                </div>
+                                <h4>JPG to PDF</h4>
+                                <p>Convert images to PDF</p>
+                            </a>
+                            <a href="tools/html-to-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/html-icon.svg" alt="HTML to PDF">
+                                </div>
+                                <h4>HTML to PDF</h4>
+                                <p>Convert web pages to PDF</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="category">
+                        <h3>Convert From PDF</h3>
+                        <div class="tools-grid">
+                            <a href="tools/pdf-to-word.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/word-icon.svg" alt="PDF to Word">
+                                </div>
+                                <h4>PDF to Word</h4>
+                                <p>Convert PDF to DOC/DOCX</p>
+                            </a>
+                            <a href="tools/pdf-to-ppt.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/ppt-icon.svg" alt="PDF to PPT">
+                                </div>
+                                <h4>PDF to PowerPoint</h4>
+                                <p>Convert PDF to PPT/PPTX</p>
+                            </a>
+                            <a href="tools/pdf-to-excel.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/excel-icon.svg" alt="PDF to Excel">
+                                </div>
+                                <h4>PDF to Excel</h4>
+                                <p>Convert PDF to XLS/XLSX</p>
+                            </a>
+                            <a href="tools/pdf-to-jpg.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/image-icon.svg" alt="PDF to JPG">
+                                </div>
+                                <h4>PDF to JPG</h4>
+                                <p>Convert PDF pages to images</p>
+                            </a>
+                            <a href="tools/pdf-to-pdfa.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/pdfa-icon.svg" alt="PDF to PDF/A">
+                                </div>
+                                <h4>PDF to PDF/A</h4>
+                                <p>Convert to archival format</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="category">
+                        <h3>Edit & Manage PDFs</h3>
+                        <div class="tools-grid">
+                            <a href="tools/merge-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/merge-icon.svg" alt="Merge PDF">
+                                </div>
+                                <h4>Merge PDF</h4>
+                                <p>Combine multiple PDFs into one</p>
+                            </a>
+                            <a href="tools/split-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/split-icon.svg" alt="Split PDF">
+                                </div>
+                                <h4>Split PDF</h4>
+                                <p>Divide PDF into multiple files</p>
+                            </a>
+                            <a href="tools/compress-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/compress-icon.svg" alt="Compress PDF">
+                                </div>
+                                <h4>Compress PDF</h4>
+                                <p>Reduce PDF file size</p>
+                            </a>
+                            <a href="tools/rotate-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/rotate-icon.svg" alt="Rotate PDF">
+                                </div>
+                                <h4>Rotate PDF</h4>
+                                <p>Rotate PDF pages</p>
+                            </a>
+                            <a href="tools/crop-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/crop-icon.svg" alt="Crop PDF">
+                                </div>
+                                <h4>Crop PDF</h4>
+                                <p>Adjust PDF page margins</p>
+                            </a>
+                            <a href="tools/page-numbers.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/number-icon.svg" alt="Page Numbers">
+                                </div>
+                                <h4>Add Page Numbers</h4>
+                                <p>Insert page numbers to PDF</p>
+                            </a>
+                            <a href="tools/watermark.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/watermark-icon.svg" alt="Watermark">
+                                </div>
+                                <h4>Add Watermark</h4>
+                                <p>Add text/image watermark</p>
+                            </a>
+                            <a href="tools/edit-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/edit-icon.svg" alt="Edit PDF">
+                                </div>
+                                <h4>Edit PDF</h4>
+                                <p>Modify PDF text and images</p>
+                            </a>
+                            <a href="tools/organize-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/organize-icon.svg" alt="Organize PDF">
+                                </div>
+                                <h4>Organize PDF</h4>
+                                <p>Reorder, delete, extract pages</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="category">
+                        <h3>Security & Protection</h3>
+                        <div class="tools-grid">
+                            <a href="tools/protect-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/protect-icon.svg" alt="Protect PDF">
+                                </div>
+                                <h4>Protect PDF</h4>
+                                <p>Add password protection</p>
+                            </a>
+                            <a href="tools/enhance-pdf.html" class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="assets/images/icons/enhance-icon.svg" alt="Enhance PDF">
+                                </div>
+                                <h4>Enhance PDF</h4>
+                                <p>Improve scanned PDF quality</p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -78,19 +255,32 @@
                 <h2>Why Choose Our PDF Tools?</h2>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">🔒</div>
+                        <div class="feature-icon">
+                            <img src="assets/images/icons/security-icon.svg" alt="Secure">
+                        </div>
                         <h3>Secure Processing</h3>
                         <p>All files are processed in your browser. No uploads to our servers.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
+                        <div class="feature-icon">
+                            <img src="assets/images/icons/fast-icon.svg" alt="Fast">
+                        </div>
                         <h3>Fast Processing</h3>
                         <p>Quick results without waiting in queues.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">💯</div>
+                        <div class="feature-icon">
+                            <img src="assets/images/icons/free-icon.svg" alt="Free">
+                        </div>
                         <h3>100% Free</h3>
                         <p>No hidden charges or watermarks.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="assets/images/icons/device-icon.svg" alt="Cross-platform">
+                        </div>
+                        <h3>Works Everywhere</h3>
+                        <p>Use on any device with a modern browser.</p>
                     </div>
                 </div>
             </div>
@@ -108,6 +298,7 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="index.html">Home</a></li>
+                        <li><a href="#all-tools">All Tools</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
                     </ul>
@@ -115,9 +306,15 @@
                 <div class="footer-section">
                     <h3>Connect</h3>
                     <div class="social-links">
-                        <a href="#" aria-label="Twitter">🐦</a>
-                        <a href="#" aria-label="Facebook">👍</a>
-                        <a href="#" aria-label="GitHub">💻</a>
+                        <a href="#" aria-label="Twitter">
+                            <img src="assets/images/icons/twitter-icon.svg" alt="Twitter">
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <img src="assets/images/icons/facebook-icon.svg" alt="Facebook">
+                        </a>
+                        <a href="#" aria-label="GitHub">
+                            <img src="assets/images/icons/github-icon.svg" alt="GitHub">
+                        </a>
                     </div>
                 </div>
             </div>
