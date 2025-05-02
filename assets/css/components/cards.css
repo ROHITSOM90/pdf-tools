@@ -1,122 +1,43 @@
-/* Contact form styling */
-.contact-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-}
-
-.form-group textarea {
-    min-height: 150px;
-    resize: vertical;
-}
-
-/* FAQ accordion styling */
-.accordion {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.accordion-item {
-    margin-bottom: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-}
-
-.accordion-header {
-    background-color: white;
-    padding: 15px;
-    cursor: pointer;
+/* Image handling for tool cards */
+.tool-card .tool-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    transition: var(--transition);
+    justify-content: center;
+    background-color: rgba(74, 107, 255, 0.1);
+    border-radius: 50%;
 }
 
-.accordion-header:hover {
-    background-color: var(--light-color);
+.tool-card .tool-icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
-.accordion-content {
-    padding: 0 15px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.accordion-content.active {
-    max-height: 200px;
-    padding: 15px;
-    border-top: 1px solid var(--border-color);
-}
-
-.accordion-icon {
-    font-size: 1.2rem;
+/* Quick tools grid images */
+.quick-tool-card img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 15px;
     transition: transform 0.3s ease;
 }
 
-.accordion-item.active .accordion-icon {
-    transform: rotate(45deg);
+.quick-tool-card:hover img {
+    transform: scale(1.1);
 }
 
-/* Modal styling */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
+/* Feature icons */
+.feature-card .feature-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+}
+
+.feature-card .feature-icon img {
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.7);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-content {
-    background-color: white;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    max-width: 500px;
-    width: 90%;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
+    object-fit: contain;
 }
