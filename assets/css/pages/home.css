@@ -1,0 +1,22 @@
+/* Home page specific styles */
+.contact {
+    padding: 40px 0;
+}
+
+.faq {
+    padding: 40px 0;
+}
+
+/* Testimonials section */
+.testimonials {
+    padding: 40px 0;
+    background-color: var(--light-color);
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
