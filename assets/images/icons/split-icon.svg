@@ -1,0 +1,8 @@
+<svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <!-- Document outline -->
+    <rect x="4" y="4" width="16" height="16" rx="1" fill="#fff" stroke="#000" stroke-width="1.5"/>
+    <!-- Split line -->
+    <path d="M12 6V18" stroke="#ff5722" stroke-width="2" stroke-dasharray="2 1"/>
+    <!-- Left section (optional highlight) -->
+    <rect x="4" y="4" width="8" height="16" fill="#e3f2fd" opacity="0.5"/>
+</svg>
