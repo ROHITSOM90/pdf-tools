@@ -1,0 +1,9 @@
+<svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main road -->
+    <path d="M12 2V10" stroke="#555" stroke-width="4" stroke-linecap="round"/>
+    <!-- Split paths -->
+    <path d="M12 10L6 22" stroke="#555" stroke-width="4" stroke-linecap="round"/>
+    <path d="M12 10L18 22" stroke="#555" stroke-width="4" stroke-linecap="round"/>
+    <!-- Highlight current path (optional) -->
+    <path d="M12 10L18 22" stroke="#ff9800" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+</svg>
