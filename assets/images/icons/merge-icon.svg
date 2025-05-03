@@ -1,11 +1,8 @@
 <svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <!-- Incoming branches -->
-    <path d="M3 7L12 12" stroke="#555" stroke-width="2" stroke-linecap="round"/>
-    <path d="M3 17L12 12" stroke="#555" stroke-width="2" stroke-linecap="round"/>
-    <!-- Main merged line -->
-    <path d="M12 12L21 12" stroke="#217346" stroke-width="2" stroke-linecap="round"/>
-    <!-- Optional arrowheads -->
-    <path d="M20 10L21 12L20 14" fill="none" stroke="#217346" stroke-width="2"/>
-    <path d="M4 6L3 7L4 8" fill="none" stroke="#555" stroke-width="2"/>
-    <path d="M4 16L3 17L4 18" fill="none" stroke="#555" stroke-width="2"/>
+    <!-- Branches -->
+    <path d="M7 5C7 3.895 7.895 3 9 3H15C16.105 3 17 3.895 17 5V10C17 11.105 16.105 12 15 12H9C7.895 12 7 11.105 7 10V5Z" fill="#e3f2fd" stroke="#2196f3"/>
+    <path d="M7 14C7 12.895 7.895 12 9 12H15C16.105 12 17 12.895 17 14V19C17 20.105 16.105 21 15 21H9C7.895 21 7 20.105 7 19V14Z" fill="#e8f5e9" stroke="#4caf50"/>
+    <!-- Merge line -->
+    <path d="M12 12V19" stroke="#ff9800" stroke-width="2"/>
+    <circle cx="12" cy="12" r="2" fill="#ff9800"/>
 </svg>
