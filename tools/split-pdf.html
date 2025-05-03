@@ -4,176 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Splitter Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background: white;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2b579a;
-            text-align: center;
-        }
-        .upload-area {
-            border: 2px dashed #2b579a;
-            border-radius: 5px;
-            padding: 30px;
-            text-align: center;
-            margin: 20px 0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .upload-area:hover {
-            background-color: #f0f6ff;
-        }
-        #file-input {
-            display: none;
-        }
-        .btn {
-            background-color: #2b579a;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .btn:hover {
-            background-color: #1e4e8c;
-        }
-        .preview-section {
-            margin-top: 20px;
-            display: none;
-        }
-        .range-selector {
-            margin: 20px 0;
-        }
-        .page-range {
-            width: 100%;
-            margin: 15px 0;
-        }
-        .split-options {
-            margin: 20px 0;
-        }
-        #preview {
-            border: 1px solid #ddd;
-            min-height: 200px;
-            margin-top: 15px;
-        }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .upload-area { border: 2px dashed #2b579a; padding: 20px; text-align: center; margin: 20px 0; }
+        #preview { margin: 20px 0; border: 1px solid #ddd; min-height: 300px; }
+        .btn { background: #2b579a; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+        .page-thumb { display: inline-block; margin: 5px; border: 1px solid #ccc; }
+        .progress { margin: 10px 0; color: green; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Split PDF File</h1>
-        
-        <div class="upload-area" id="drop-area">
-            <h3>Drag & Drop PDF File Here</h3>
-            <p>or</p>
-            <button class="btn" id="browse-btn">Browse Files</button>
-            <input type="file" id="file-input" accept=".pdf">
-        </div>
-        
-        <div class="preview-section" id="preview-section">
-            <h3>PDF Preview</h3>
-            <div id="preview"></div>
-            
-            <div class="split-options">
-                <h3>Split Options</h3>
-                <label>
-                    <input type="radio" name="split-mode" value="range" checked> 
-                    Select Page Range
-                </label>
-                <div class="range-selector">
-                    <label for="start-page">From page:</label>
-                    <input type="number" id="start-page" min="1" value="1">
-                    
-                    <label for="end-page">To page:</label>
-                    <input type="number" id="end-page" min="1" value="1">
-                </div>
-                
-                <label>
-                    <input type="radio" name="split-mode" value="every"> 
-                    Split every
-                    <input type="number" id="split-interval" min="1" value="1" disabled> pages
-                </label>
-            </div>
-            
-            <button class="btn" id="split-btn">Split PDF</button>
-        </div>
+    <h1>PDF Splitter Tool</h1>
+    <div class="upload-area" id="drop-area">
+        <p>Drag & drop a PDF file here or</p>
+        <input type="file" id="file-input" accept=".pdf">
     </div>
+    
+    <div id="preview-section" style="display: none;">
+        <h3>Select Pages to Split:</h3>
+        <div id="page-thumbnails"></div>
+        <div>
+            <label>From Page: <input type="number" id="start-page" min="1" value="1"></label>
+            <label>To Page: <input type="number" id="end-page" min="1" value="1"></label>
+        </div>
+        <button class="btn" id="split-btn">Split & Download</button>
+    </div>
+    <div id="progress" class="progress"></div>
 
     <script>
-        // Basic functionality (would need PDF.js or backend integration for full implementation)
-        document.getElementById('browse-btn').addEventListener('click', () => {
-            document.getElementById('file-input').click();
-        });
-        
-        document.getElementById('file-input').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file && file.type === 'application/pdf') {
-                document.getElementById('preview-section').style.display = 'block';
-                // Here you would implement PDF.js to show preview
-                document.getElementById('preview').innerHTML = 
-                    `<p>Loaded: ${file.name}</p><p>Note: Full preview requires PDF.js integration</p>`;
-            }
-        });
-        
-        // Drag and drop functionality
+        // Initialize PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+
+        let pdfDoc = null;
+        const fileInput = document.getElementById('file-input');
         const dropArea = document.getElementById('drop-area');
+        const previewSection = document.getElementById('preview-section');
+        const pageThumbnails = document.getElementById('page-thumbnails');
+        const progress = document.getElementById('progress');
+
+        // Handle file selection
+        fileInput.addEventListener('change', async (e) => {
+            if (e.target.files.length === 0) return;
+            await loadPDF(e.target.files[0]);
+        });
+
+        // Drag and drop handlers
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             dropArea.addEventListener(eventName, preventDefaults, false);
         });
-        
+
         function preventDefaults(e) {
             e.preventDefault();
             e.stopPropagation();
         }
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        function highlight() {
-            dropArea.style.backgroundColor = '#f0f6ff';
-        }
-        
-        function unhighlight() {
-            dropArea.style.backgroundColor = '';
-        }
-        
-        dropArea.addEventListener('drop', handleDrop, false);
-        
-        function handleDrop(e) {
+
+        dropArea.addEventListener('drop', async (e) => {
             const dt = e.dataTransfer;
-            const file = dt.files[0];
-            if (file && file.type === 'application/pdf') {
-                document.getElementById('preview-section').style.display = 'block';
-                // Here you would implement PDF.js to show preview
-                document.getElementById('preview').innerHTML = 
-                    `<p>Loaded: ${file.name}</p><p>Note: Full preview requires PDF.js integration</p>`;
-            }
+            if (dt.files.length === 0) return;
+            await loadPDF(dt.files[0]);
+        });
+
+        // Load PDF and render thumbnails
+        async function loadPDF(file) {
+            progress.textContent = "Loading PDF...";
+            const reader = new FileReader();
+            
+            reader.onload = async function() {
+                try {
+                    const typedArray = new Uint8Array(this.result);
+                    pdfDoc = await pdfjsLib.getDocument(typedArray).promise;
+                    
+                    // Render thumbnails
+                    pageThumbnails.innerHTML = '';
+                    for (let i = 1; i <= pdfDoc.numPages; i++) {
+                        const page = await pdfDoc.getPage(i);
+                        const viewport = page.getViewport({ scale: 0.5 });
+                        
+                        const canvas = document.createElement('canvas');
+                        const context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+                        canvas.className = 'page-thumb';
+                        
+                        await page.render({
+                            canvasContext: context,
+                            viewport: viewport
+                        }).promise;
+                        
+                        pageThumbnails.appendChild(canvas);
+                    }
+                    
+                    document.getElementById('end-page').value = pdfDoc.numPages;
+                    previewSection.style.display = 'block';
+                    progress.textContent = `Loaded ${pdfDoc.numPages} pages`;
+                } catch (err) {
+                    progress.textContent = "Error: " + err.message;
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
         }
-        
-        // Split mode toggle
-        document.querySelectorAll('input[name="split-mode"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                document.getElementById('split-interval').disabled = this.value !== 'every';
-                document.querySelector('.range-selector').style.display = 
-                    this.value === 'range' ? 'block' : 'none';
-            });
+
+        // Split and download PDF
+        document.getElementById('split-btn').addEventListener('click', async () => {
+            if (!pdfDoc) return;
+            
+            const startPage = parseInt(document.getElementById('start-page').value);
+            const endPage = parseInt(document.getElementById('end-page').value);
+            
+            if (startPage < 1 || endPage > pdfDoc.numPages || startPage > endPage) {
+                progress.textContent = "Invalid page range!";
+                return;
+            }
+            
+            progress.textContent = "Splitting PDF...";
+            
+            try {
+                // Create a new PDF with selected pages
+                const { PDFDocument } = PDFLib;
+                const newPdf = await PDFDocument.create();
+                
+                // Load the original PDF
+                const originalBytes = await pdfDoc.getData();
+                const originalPdf = await PDFDocument.load(originalBytes);
+                
+                // Copy selected pages
+                const pages = await newPdf.copyPages(originalPdf, 
+                    Array.from({length: endPage - startPage + 1}, (_, i) => startPage - 1 + i)
+                );
+                
+                pages.forEach(page => newPdf.addPage(page));
+                
+                // Save and download
+                const newPdfBytes = await newPdf.save();
+                const blob = new Blob([newPdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `split_pages_${startPage}-${endPage}.pdf`;
+                a.click();
+                
+                progress.textContent = `Downloaded pages ${startPage}-${endPage}`;
+            } catch (err) {
+                progress.textContent = "Error: " + err.message;
+            }
         });
     </script>
 </body>
