@@ -1,0 +1,10 @@
+<svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Document outline -->
+  <path fill="#2b579a" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+  
+  <!-- Arrow representing compression -->
+  <path fill="#fff" d="M12 7v10m0-10l-3 3m3-3l3 3m-3 7l-3-3m3 3l3-3"/>
+  
+  <!-- Smaller document inside representing reduced size -->
+  <path fill="#4CAF50" d="M8 10h8v8H8z" opacity="0.8"/>
+</svg>
