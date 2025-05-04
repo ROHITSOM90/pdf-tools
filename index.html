@@ -3,1657 +3,1241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Tools - All-in-One PDF Converter & Editor</title>
-    <meta name="description" content="Free online PDF tools: convert, edit, merge, split, compress PDFs and more. No installation required. Fast, secure, and easy to use.">
-    <meta name="keywords" content="PDF tools, PDF converter, PDF to Word, PDF editor, merge PDF, split PDF, compress PDF, PDF security">
-    <meta name="author" content="PDF Tools">
-    <meta name="robots" content="index, follow">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-    <script src="js/pdf-lib.min.js"></script>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/file-pdf.svg" type="image/svg+xml">
-    
-    <!-- Tailwind CSS -->
+    <title>ConvertAll - Multi-Format File Conversion Tools</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4F46E5;
-            --primary-dark: #4338CA;
-            --secondary: #10B981;
-            --secondary-dark: #059669;
-            --danger: #EF4444;
-            --warning: #F59E0B;
-            --dark: #1F2937;
-            --light: #F9FAFB;
+            --primary-color: #4f46e5;
+            --secondary-color: #10b981;
+            --dark-color: #1f2937;
+            --light-color: #f3f4f6;
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
         }
         
-        .btn {
-            @apply px-6 py-2 rounded-md font-medium transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-opacity-50;
-        }
-        
-        .btn-primary {
-            @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
-        }
-        
-        .btn-secondary {
-            @apply bg-green-500 text-white hover:bg-green-600 focus:ring-green-400;
-        }
-        
-        .btn-danger {
-            @apply bg-red-500 text-white hover:bg-red-600 focus:ring-red-400;
-        }
-        
-        .btn-outline {
-            @apply border border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white focus:ring-indigo-500;
-        }
-        
-        .form-input {
-            @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500;
-        }
-        
-        .card {
-            @apply bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300;
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
         }
         
         .tool-card {
-            @apply p-6 flex flex-col items-center text-center transition duration-300 ease-in-out transform hover:-translate-y-1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .tool-card .icon {
-            @apply text-4xl mb-4 text-indigo-600;
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
             left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 50;
-            overflow: auto;
-            animation: fadeIn 0.3s;
         }
         
-        .modal-content {
-            @apply bg-white rounded-lg shadow-xl p-6 max-w-md mx-auto my-10;
-            animation: slideIn 0.3s;
+        .upload-area {
+            border: 2px dashed #CBD5E0;
+            transition: all 0.3s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(79, 70, 229, 0.05);
         }
         
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .btn-primary {
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
         }
         
-        .tab {
-            @apply inline-block px-5 py-2 font-medium text-gray-600 cursor-pointer;
+        .btn-primary:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
         }
         
-        .tab.active {
-            @apply border-b-2 border-indigo-600 text-indigo-600 font-semibold;
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
         }
         
+        .btn-secondary:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+        }
+        
+        .feature-icon {
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .tool-card:hover .feature-icon {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .ad-container {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Tab System Styling */
         .tab-content {
             display: none;
         }
         
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s;
         }
         
-        .feature-icon {
-            @apply inline-flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 text-indigo-600 mb-4;
+        .tab-btn {
+            transition: all 0.3s ease;
         }
         
-        .dropdown {
-            position: relative;
-        }
-        
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            min-width: 200px;
-            z-index: 10;
-        }
-        
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-        
-        .tooltip {
-            position: relative;
-        }
-        
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 120px;
-            background-color: var(--dark);
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        @media (max-width: 768px) {
-            .mobile-menu {
-                display: none;
-            }
-            
-            .mobile-menu.active {
-                display: block;
-            }
-        }
-        
-        /* AdSense Styling */
-        .ad-container {
-            @apply my-8 mx-auto text-center;
-            min-height: 90px;
-        }
-        
-        /* File Upload Styling */
-        .file-upload {
-            position: relative;
-            overflow: hidden;
-            margin: 10px;
-        }
-        
-        .file-upload input[type=file] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .upload-area {
-            @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition hover:border-indigo-500;
-        }
-        
-        .progress {
-            @apply w-full bg-gray-200 rounded-full h-2.5 mb-4;
-        }
-        
-        .progress-bar {
-            @apply bg-indigo-600 h-2.5 rounded-full transition-all duration-300;
-            width: 0%;
-        }
-        
-        /* User Dashboard */
-        .sidebar-link {
-            @apply flex items-center px-4 py-2 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-md transition;
-        }
-        
-        .sidebar-link.active {
-            @apply bg-indigo-50 text-indigo-600 font-medium;
+        .tab-btn.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-30">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-3">
-                <div class="flex items-center">
-                    <a href="#" class="flex items-center space-x-2">
-                        <i class="fas fa-file-pdf text-2xl text-indigo-600"></i>
-                        <span class="text-xl font-bold text-gray-800">PDF<span class="text-indigo-600">Tools</span></span>
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#home" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
-                    <a href="#tools" class="text-gray-700 hover:text-indigo-600 transition">Tools</a>
-                    <a href="#features" class="text-gray-700 hover:text-indigo-600 transition">Features</a>
-                    <a href="#how-it-works" class="text-gray-700 hover:text-indigo-600 transition">How It Works</a>
-                    <div class="dropdown">
-                        <a href="#" class="text-gray-700 hover:text-indigo-600 transition flex items-center">
-                            More <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </a>
-                        <div class="dropdown-menu bg-white shadow-lg rounded-md py-2 mt-1">
-                            <a href="#faq" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">FAQ</a>
-                            <a href="#blog" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Blog</a>
-                            <a href="#support" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Support</a>
-                            <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Contact</a>
-                        </div>
-                    </div>
-                </nav>
-            <!-- Mobile Navigation -->
-            <div id="mobileMenu" class="mobile-menu md:hidden py-3 border-t">
-                <a href="#home" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Home</a>
-                <a href="#tools" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Tools</a>
-                <a href="#features" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Features</a>
-                <a href="#how-it-works" class="block py-2 text-gray-700 hover:text-indigo-600 transition">How It Works</a>
-                <a href="#faq" class="block py-2 text-gray-700 hover:text-indigo-600 transition">FAQ</a>
-                <a href="#blog" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Blog</a>
-                <a href="#support" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Support</a>
-                <a href="#contact" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Contact</a>
+<body class="bg-gray-50">
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center">
+                    <i class="fas fa-exchange-alt text-indigo-600 text-3xl mr-2"></i>
+                    <span class="text-2xl font-bold text-gray-800">ConvertAll</span>
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#pdf" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">PDF Tools</a>
+                <a href="#video" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">Video Convert</a>
+                <a href="#image" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">Image Tools</a>
+                <a href="#audio" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">Audio Convert</a>
+                <a href="#" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700">Sign Up</a>
+            </nav>
+            
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-800 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="#pdf" class="block text-gray-700 hover:text-indigo-600 font-medium">PDF Tools</a>
+                <a href="#video" class="block text-gray-700 hover:text-indigo-600 font-medium">Video Convert</a>
+                <a href="#image" class="block text-gray-700 hover:text-indigo-600 font-medium">Image Tools</a>
+                <a href="#audio" class="block text-gray-700 hover:text-indigo-600 font-medium">Audio Convert</a>
+                <a href="#" class="block bg-indigo-600 text-white px-4 py-2 rounded-md text-center hover:bg-indigo-700">Sign Up</a>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white py-16">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6">All PDF Tools You Need in One Place</h1>
-                    <p class="text-lg mb-8 text-indigo-100">Convert, edit, merge, split, compress or protect your PDF files effortlessly with our advanced online tools. No installation required.</p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <button id="getStartedBtn" class="btn bg-white text-indigo-600 hover:bg-gray-100">
-                            Get Started <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                       </div>
-                    </div>
+    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <div class="section-container flex flex-col md:flex-row items-center justify-between py-12 md:py-20">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">All-in-One File Conversion Tools</h1>
+                <p class="text-lg md:text-xl mb-6 opacity-90">Convert PDF, Video, Image, and Audio files instantly. Easy to use, fast, and secure.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#tools" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">
+                        Get Started <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#how-it-works" class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-medium">
+                        How It Works <i class="fas fa-question-circle ml-2"></i>
+                    </a>
                 </div>
             </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="flex items-center justify-center space-x-3">
+                            <div class="w-16 h-20 bg-indigo-100 rounded flex items-center justify-center">
+                                <i class="far fa-file-pdf text-indigo-600 text-2xl"></i>
+                            </div>
+                            <div class="text-4xl text-indigo-600">→</div>
+                            <div class="w-16 h-20 bg-green-100 rounded flex items-center justify-center">
+                                <i class="far fa-file-word text-green-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-indigo-600 h-2.5 rounded-full w-2/3"></div>
+                        </div>
+                        <p class="text-center text-sm text-gray-500 mt-2">Converting: 67%</p>
+                    </div>
+                    <div class="absolute -top-4 -left-4 w-20 h-20 bg-yellow-400 rounded-lg -z-10 transform -rotate-6"></div>
+                    <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-indigo-300 rounded-lg -z-10 transform rotate-6"></div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Ad Banner -->
-    <div class="ad-container py-4 bg-gray-100">
-        <!-- Google AdSense -->
-        <div class="mx-auto max-w-4xl">
-            <div class="bg-gray-200 text-center p-4 rounded">
-                <span class="text-xs text-gray-500 uppercase">Advertisement</span>
-                <div id="adsense-banner">
-                    <!-- Replace with your AdSense code -->
-                    <div class="py-6 text-gray-400">Google AdSense Banner (728×90)</div>
-                </div>
-            </div>
+    <!-- Google AdSense Banner -->
+    <div class="ad-container p-4 text-center my-6 mx-auto max-w-6xl">
+        <div class="border border-dashed border-gray-300 p-4 rounded">
+            <p class="text-gray-500">Google AdSense Banner Placeholder</p>
+            <p class="text-xs text-gray-400">Ad will appear here</p>
         </div>
     </div>
 
-    <!-- Tools Section -->
-    <section id="tools" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our PDF Tools</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">We offer a wide range of PDF tools to help you manage your documents efficiently. All tools are easy to use and completely secure.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Convert Tools -->
-                <div class="card tool-card">
-                    <i class="fas fa-exchange-alt icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">Convert from PDF</h3>
-                    <p class="text-gray-600 mb-4">Transform PDFs to editable formats</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-word text-blue-600 mr-2"></i> PDF to Word
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-powerpoint text-orange-600 mr-2"></i> PDF to PowerPoint
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-excel text-green-600 mr-2"></i> PDF to Excel
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-image text-purple-600 mr-2"></i> PDF to JPG
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Convert to PDF -->
-                <div class="card tool-card">
-                    <i class="fas fa-file-pdf icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">Convert to PDF</h3>
-                    <p class="text-gray-600 mb-4">Create PDFs from various formats</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-word text-blue-600 mr-2"></i> Word to PDF
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-powerpoint text-orange-600 mr-2"></i> PowerPoint to PDF
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-excel text-green-600 mr-2"></i> Excel to PDF
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="far fa-file-image text-purple-600 mr-2"></i> JPG to PDF
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Edit PDF -->
-                <div class="card tool-card">
-                    <i class="fas fa-edit icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">Edit PDF</h3>
-                    <p class="text-gray-600 mb-4">Modify your PDF files easily</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-font mr-2 text-indigo-600"></i> Edit Text
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-image mr-2 text-indigo-600"></i> Edit Images
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-draw-polygon mr-2 text-indigo-600"></i> Draw & Annotate
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-crop-alt mr-2 text-indigo-600"></i> Crop Pages
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Merge & Split -->
-                <div class="card tool-card">
-                    <i class="fas fa-object-group icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">Organize PDF</h3>
-                    <p class="text-gray-600 mb-4">Arrange pages as you need</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-object-ungroup mr-2 text-indigo-600"></i> Merge PDFs
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-cut mr-2 text-indigo-600"></i> Split PDF
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-sort-numeric-down mr-2 text-indigo-600"></i> Organize Pages
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-compress-arrows-alt mr-2 text-indigo-600"></i> Compress PDF
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Security -->
-                <div class="card tool-card">
-                    <i class="fas fa-shield-alt icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">PDF Security</h3>
-                    <p class="text-gray-600 mb-4">Protect your sensitive documents</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-lock mr-2 text-indigo-600"></i> Password Protect
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-unlock mr-2 text-indigo-600"></i> Remove Password
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-signature mr-2 text-indigo-600"></i> Add Signature
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-certificate mr-2 text-indigo-600"></i> Set Permissions
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Optimize -->
-                <div class="card tool-card">
-                    <i class="fas fa-compress-arrows-alt icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">Optimize PDF</h3>
-                    <p class="text-gray-600 mb-4">Make your PDFs more efficient</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-compress mr-2 text-indigo-600"></i> Compress PDF
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-crop mr-2 text-indigo-600"></i> Crop PDF
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-search-minus mr-2 text-indigo-600"></i> Reduce Size
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-file-medical-alt mr-2 text-indigo-600"></i> OCR PDF
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Customize -->
-                <div class="card tool-card">
-                    <i class="fas fa-paint-brush icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">Customize PDF</h3>
-                    <p class="text-gray-600 mb-4">Add personal touches to your PDFs</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-plus-square mr-2 text-indigo-600"></i> Add Watermark
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-sort-numeric-up mr-2 text-indigo-600"></i> Add Page Numbers
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-file-alt mr-2 text-indigo-600"></i> Add Headers & Footers
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-border-style mr-2 text-indigo-600"></i> Add Borders
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Manage PDFs -->
-                <div class="card tool-card">
-                    <i class="fas fa-tasks icon"></i>
-                    <h3 class="text-lg font-semibold mb-2">Manage PDFs</h3>
-                    <p class="text-gray-600 mb-4">Organize your documents efficiently</p>
-                    <div class="space-y-2 w-full">
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-300 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-rotate mr-2 text-indigo-600"></i> Rotate Pages
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-trash-alt mr-2 text-indigo-600"></i> Delete Pages
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-file-export mr-2 text-indigo-600"></i> Extract Pages
-                        </a>
-                        <a href="#" class="block w-full py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-md text-left text-sm">
-                            <i class="fas fa-layer-group mr-2 text-indigo-600"></i> Rearrange Pages
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Tool: Merge PDF -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <span class="text-sm font-semibold text-indigo-600 uppercase">Featured Tool</span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Merge Multiple PDFs</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Combine multiple PDF documents into a single file in just seconds. Rearrange pages as needed before merging.</p>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
-                <div class="upload-area mb-6">
-                    <i class="fas fa-file-pdf text-5xl text-indigo-500 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-3">Drop PDFs here to merge</h3>
-                    <p class="text-gray-500 mb-4">or click to browse files</p>
-                    <input type="file" accept=".pdf" multiple class="hidden" id="mergeFileInput" />
-                    <button onclick="document.getElementById('mergeFileInput').click()" class="btn btn-primary">Select Files</button>
-                </div>
-                
-                <div id="filesList" class="hidden">
-                    <h4 class="font-medium text-gray-800 mb-3">Files to merge (drag to reorder):</h4>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-md border border-gray-200">
-                            <div class="flex items-center">
-                                <i class="fas fa-file-pdf text-red-500 mr-3"></i>
-                                <div>
-                                    <span class="font-medium">Document1.pdf</span>
-                                    <span class="text-sm text-gray-500 block">156 KB • 5 pages</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <button class="p-2 text-gray-500 hover:text-indigo-600">
-                                    <i class="fas fa-arrow-up"></i>
-                                </button>
-                                <button class="p-2 text-gray-500 hover:text-indigo-600">
-                                    <i class="fas fa-arrow-down"></i>
-                                </button>
-                                <button class="p-2 text-gray-500 hover:text-red-600">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-md border border-gray-200">
-                            <div class="flex items-center">
-                                <i class="fas fa-file-pdf text-red-500 mr-3"></i>
-                                <div>
-                                    <span class="font-medium">Contract.pdf</span>
-                                    <span class="text-sm text-gray-500 block">2.3 MB • 15 pages</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <button class="p-2 text-gray-500 hover:text-indigo-600">
-                                    <i class="fas fa-arrow-up"></i>
-                                </button>
-                                <button class="p-2 text-gray-500 hover:text-indigo-600">
-                                    <i class="fas fa-arrow-down"></i>
-                                </button>
-                                <button class="p-2 text-gray-500 hover:text-red-600">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-md border border-gray-200">
-                            <div class="flex items-center">
-                                <i class="fas fa-file-pdf text-red-500 mr-3"></i>
-                                <div>
-                                    <span class="font-medium">Report.pdf</span>
-                                    <span class="text-sm text-gray-500 block">890 KB • 8 pages</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <button class="p-2 text-gray-500 hover:text-indigo-600">
-                                    <i class="fas fa-arrow-up"></i>
-                                </button>
-                                <button class="p-2 text-gray-500 hover:text-indigo-600">
-                                    <i class="fas fa-arrow-down"></i>
-                                </button>
-                                <button class="p-2 text-gray-500 hover:text-red-600">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-6 flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Options:</label>
-                            <div class="flex items-center space-x-4">
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600">
-                                    <span class="ml-2 text-sm text-gray-700">Create bookmarks</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600">
-                                    <span class="ml-2 text-sm text-gray-700">Flatten all forms</span>
-                                </label>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-object-group mr-2"></i> Merge Files
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-10">
-                <p class="text-gray-600 mb-4">Need to combine more complex documents?</p>
-                <a href="#" class="text-indigo-600 font-medium hover:text-indigo-800">Try our Advanced Merge <i class="fas fa-arrow-right ml-1"></i></a>
-            </div>
-        </div>
-    </section>
-
     <!-- Features Section -->
-    <section id="features" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose Our PDF Tools</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Our platform offers a comprehensive suite of tools designed for maximum efficiency and security.</p>
+    <section id="features" class="py-12 bg-white">
+        <div class="section-container">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Choose Our Conversion Tools?</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Professional-grade conversion tools that are simple to use, fast, and secure.</p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="p-6 border border-gray-200 rounded-xl hover:shadow-md transition duration-300">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Secure Processing</h3>
-                    <p class="text-gray-600">Your files are encrypted during transit and automatically deleted after processing. We never share your documents.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Lightning Fast</h3>
+                    <p class="text-gray-600">Convert your files in seconds with our optimized processing technology.</p>
                 </div>
                 
-                <!-- Feature 2 -->
-                <div class="p-6 border border-gray-200 rounded-xl hover:shadow-md transition duration-300">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Lightning Fast</h3>
-                    <p class="text-gray-600">Our optimized processing algorithms ensure quick conversion and editing of your PDF documents with no waiting time.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">100% Secure</h3>
+                    <p class="text-gray-600">Your files are automatically deleted after conversion to protect your privacy.</p>
                 </div>
                 
-                <!-- Feature 3 -->
-                <div class="p-6 border border-gray-200 rounded-xl hover:shadow-md transition duration-300">
-                    <div class="feature-icon">
-                        <i class="fas fa-cloud"></i>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-desktop text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Cloud-Based</h3>
-                    <p class="text-gray-600">No software installation required. Access all tools from any device with an internet connection, anytime, anywhere.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">All Platforms</h3>
+                    <p class="text-gray-600">Works on any device - desktop, tablet, or mobile. No installation needed.</p>
                 </div>
                 
-                <!-- Feature 4 -->
-                <div class="p-6 border border-gray-200 rounded-xl hover:shadow-md transition duration-300">
-                    <div class="feature-icon">
-                        <i class="fas fa-magic"></i>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-check-circle text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">High Quality</h3>
-                    <p class="text-gray-600">Maintain the original quality of your documents. Our tools preserve formatting, images, and fonts during conversion.</p>
-                </div>
-                
-                <!-- Feature 5 -->
-                <div class="p-6 border border-gray-200 rounded-xl hover:shadow-md transition duration-300">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">User Friendly</h3>
-                    <p class="text-gray-600">Intuitive interface designed for users of all skill levels. No technical knowledge required to use our tools.</p>
-                </div>
-                
-                <!-- Feature 6 -->
-                <div class="p-6 border border-gray-200 rounded-xl hover:shadow-md transition duration-300">
-                    <div class="feature-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Advanced Options</h3>
-                    <p class="text-gray-600">Fine-tune your documents with our advanced customization options while maintaining ease of use.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">High Quality</h3>
+                    <p class="text-gray-600">Preserve the original quality of your files during the conversion process.</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Testimonials Section with Pricing -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our Users Say</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Thousands of professionals and businesses trust our tools for their document needs.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <!-- Testimonial 1 -->
-                <div class="bg-white p-6 rounded-xl shadow">
-                    <div class="flex items-center mb-4">
-                        <div class="text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <span class="ml-2 text-sm font-medium">5.0</span>
-                    </div>
-                    <p class="text-gray-600 mb-6">"This PDF tool saved me so much time at work. I can quickly convert client documents to the formats I need and apply security measures without any hassle."</p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User" class="w-10 h-10 rounded-full" />
-                        <div class="ml-3">
-                            <h4 class="font-medium">Sarah Johnson</h4>
-                            <p class="text-sm text-gray-500">Marketing Manager</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="bg-white p-6 rounded-xl shadow">
-                    <div class="flex items-center mb-4">
-                        <div class="text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <span class="ml-2 text-sm font-medium">5.0</span>
-                    </div>
-                    <p class="text-gray-600 mb-6">"As a small business owner, I needed an affordable way to manage my PDF documents securely. This platform has all the tools I need at a fraction of the cost of desktop software."</p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-10 h-10 rounded-full" />
-                        <div class="ml-3">
-                            <h4 class="font-medium">Michael Chen</h4>
-                            <p class="text-sm text-gray-500">Business Owner</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="bg-white p-6 rounded-xl shadow">
-                    <div class="flex items-center mb-4">
-                        <div class="text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <span class="ml-2 text-sm font-medium">4.5</span>
-                    </div>
-                    <p class="text-gray-600 mb-6">"The ability to merge multiple documents and then secure them with password protection has been invaluable for our legal team. The interface is intuitive and the processing is quick."</p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User" class="w-10 h-10 rounded-full" />
-                        <div class="ml-3">
-                            <h4 class="font-medium">Emily Rodriguez</h4>
-                            <p class="text-sm text-gray-500">Legal Assistant</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
     </section>
 
     <!-- How It Works -->
-    <section id="how-it-works" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Our tools are designed to be intuitive and easy to use. Complete your PDF tasks in just three simple steps.</p>
+    <section id="how-it-works" class="py-12 bg-gray-50">
+        <div class="section-container">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">How It Works</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Three simple steps to convert your files</p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                <!-- Step 1 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-xl font-bold text-indigo-600">1</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Upload Your File</h3>
+                    <p class="text-gray-600">Select the file you want to convert from your device or cloud storage.</p>
+                    <div class="mt-4">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-indigo-400"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Upload Your Files</h3>
-                    <p class="text-gray-600">Select the PDF files you want to work with or drag and drop them directly onto our platform.</p>
                 </div>
                 
-                <!-- Step 2 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-xl font-bold text-indigo-600">2</span>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Choose Format</h3>
+                    <p class="text-gray-600">Select the output format you need from our wide range of options.</p>
+                    <div class="mt-4">
+                        <i class="fas fa-exchange-alt text-4xl text-indigo-400"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Choose Your Tool</h3>
-                    <p class="text-gray-600">Select the operation you want to perform from our wide range of PDF tools and customize settings as needed.</p>
                 </div>
                 
-                <!-- Step 3 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-xl font-bold text-indigo-600">3</span>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Download Result</h3>
+                    <p class="text-gray-600">Get your converted file immediately. No email registration required.</p>
+                    <div class="mt-4">
+                        <i class="fas fa-download text-4xl text-indigo-400"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Download Result</h3>
-                    <p class="text-gray-600">After processing, download your new PDF files immediately or receive them via email if you're a registered user.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHO Monetization Banner -->
+    <div class="ad-container p-4 text-center my-6 mx-auto max-w-6xl">
+        <div class="border border-dashed border-gray-300 p-4 rounded bg-blue-50">
+            <p class="text-gray-600 font-semibold">SHO Monetization Placeholder</p>
+            <p class="text-xs text-gray-500">Premium sponsored content will appear here</p>
+        </div>
+    </div>
+
+    <!-- Main Tools Section -->
+    <section id="tools" class="py-12">
+        <div class="section-container">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Conversion Tools</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Select the tool you need for your file conversion</p>
+            </div>
+            
+            <!-- Tool Categories Tabs -->
+            <div class="mb-8">
+                <div class="flex flex-wrap justify-center border-b border-gray-200">
+                    <button class="tab-btn active px-6 py-3 font-semibold text-lg focus:outline-none" data-target="pdf-tools">
+                        <i class="far fa-file-pdf mr-2"></i> PDF Tools
+                    </button>
+                    <button class="tab-btn px-6 py-3 font-semibold text-lg focus:outline-none" data-target="video-tools">
+                        <i class="fas fa-video mr-2"></i> Video Tools
+                    </button>
+                    <button class="tab-btn px-6 py-3 font-semibold text-lg focus:outline-none" data-target="image-tools">
+                        <i class="far fa-image mr-2"></i> Image Tools
+                    </button>
+                    <button class="tab-btn px-6 py-3 font-semibold text-lg focus:outline-none" data-target="audio-tools">
+                        <i class="fas fa-music mr-2"></i> Audio Tools
+                    </button>
                 </div>
             </div>
             
-            <div class="mt-16 text-center">
-                <a href="#tools" class="btn btn-primary">Try It Now</a>
+            <!-- PDF Tools Section -->
+            <div id="pdf-tools" class="tab-content active">
+                <div id="pdf" class="mb-10">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">PDF Conversion Tools</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- PDF to Word -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="far fa-file-word text-blue-600 text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-semibold">PDF to Word</h4>
+                                    </div>
+                                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Popular</span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert PDF documents to editable Word files with high accuracy.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept=".pdf" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- PDF to PowerPoint -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="far fa-file-powerpoint text-red-600 text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-semibold">PDF to PowerPoint</h4>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert PDF files to PowerPoint presentations with all elements intact.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept=".pdf" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- PDF to Excel -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="far fa-file-excel text-green-600 text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-semibold">PDF to Excel</h4>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Extract tables from PDF files and convert them to editable Excel spreadsheets.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept=".pdf" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Optimize PDF -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-compress-arrows-alt text-purple-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Optimize PDF</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Reduce file size while maintaining quality for easier sharing and storage.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept=".pdf" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Optimize Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Organize PDF -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-sort-amount-down text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Organize PDF</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Merge, split, reorder, or delete pages in your PDF documents.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept=".pdf" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Organize Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Secure PDF -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-lock text-red-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Secure PDF</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Add password protection and restrict editing, printing or copying of your PDF.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept=".pdf" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Secure Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video Tools Section -->
+            <div id="video-tools" class="tab-content">
+                <div id="video" class="mb-10">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Video Conversion Tools</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Video to MP3 -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-music text-indigo-600 text-2xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-semibold">Video to MP3</h4>
+                                    </div>
+                                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Popular</span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Extract high-quality audio from any video file and save as MP3.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="video/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Video to MP4 -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-video text-blue-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Video to MP4</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert any video format to MP4 for universal compatibility.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="video/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Video to MOV -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-film text-green-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Video to MOV</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert videos to Apple QuickTime MOV format with high quality.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="video/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Video to AVI -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-file-video text-purple-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Video to AVI</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert videos to AVI format for maximum compatibility with media players.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="video/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Video Compressor -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-compress text-red-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Video Compressor</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Reduce video file size while maintaining quality for easier sharing.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="video/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Compress Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Video Trimmer -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-cut text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Video Trimmer</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Cut videos to extract the parts you need without quality loss.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="video/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Trim Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Tools Section -->
+            <div id="image-tools" class="tab-content">
+                <div id="image" class="mb-10">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Image Conversion Tools</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Image to JPEG -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="far fa-file-image text-pink-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Image to JPEG</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert any image format to JPEG with adjustable quality settings.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="image/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image to PDF -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="far fa-file-pdf text-indigo-600 text-xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-semibold">Image to PDF</h4>
+                                    </div>
+                                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Popular</span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert single or multiple images into a PDF document.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="image/*" multiple />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Resize Image -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-expand-arrows-alt text-blue-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Resize Image</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Resize images by dimensions or percentage while preserving quality.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="image/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Resize Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Compressor -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-compress-arrows-alt text-green-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Image Compressor</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Reduce image file size while maintaining visual quality for faster loading.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="image/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Compress Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Cropper -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-crop-alt text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Image Cropper</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Crop images to your desired dimensions or aspect ratio.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="image/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Crop Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Format Converter -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-exchange-alt text-purple-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Format Converter</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert between PNG, GIF, BMP, WEBP and other image formats.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="image/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Audio Tools Section -->
+            <div id="audio-tools" class="tab-content">
+                <div id="audio" class="mb-10">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Audio Conversion Tools</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- MP3 Converter -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-music text-indigo-600 text-xl"></i>
+                                        </div>
+                                        <h4 class="text-lg font-semibold">MP3 Converter</h4>
+                                    </div>
+                                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Popular</span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert audio files to MP3 format for universal compatibility.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="audio/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- WAV Converter -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-file-audio text-blue-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">WAV Converter</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert audio to WAV format for high-quality, uncompressed sound.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="audio/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- AAC Converter -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-volume-up text-green-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">AAC Converter</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Convert audio to AAC format for high-quality compressed audio.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="audio/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Audio Trimmer -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-cut text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Audio Trimmer</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Cut audio files to extract specific segments without quality loss.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="audio/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Trim Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Audio Merger -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-object-group text-pink-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Audio Merger</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Combine multiple audio files into a single track seamlessly.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="audio/*" multiple />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Merge Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Audio Compressor -->
+                        <div class="tool-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-compress text-purple-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold">Audio Compressor</h4>
+                                </div>
+                                <p class="text-gray-600 mb-4">Reduce audio file size while maintaining sound quality.</p>
+                                <div class="upload-area p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Drag & drop or click to upload</p>
+                                    <input type="file" class="hidden" accept="audio/*" />
+                                </div>
+                                <button class="w-full py-2 btn-primary text-white font-semibold rounded-lg">
+                                    Compress Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google AdSense Banner -->
+    <div class="ad-container p-4 text-center my-6 mx-auto max-w-6xl">
+        <div class="border border-dashed border-gray-300 p-4 rounded">
+            <p class="text-gray-500">Google AdSense Banner Placeholder</p>
+            <p class="text-xs text-gray-400">Ad will appear here</p>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="section-container">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">What Our Users Say</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Trusted by millions of users worldwide</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-gray-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"I needed to convert a large PDF to Word for editing. This tool did it perfectly while keeping all the formatting intact. Saved me hours of work!"</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-gray-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Michael Rodriguez</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The video converter is incredibly fast. I converted a 20-minute video to MP3 in seconds. Great quality and super easy to use!"</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-gray-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Emily Chen</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"I use the image compression tool weekly for my blog. It reduces file sizes dramatically without any noticeable quality loss. Highly recommend!"</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Find answers to commonly asked questions about our PDF tools and services.</p>
+    <section class="py-12 bg-white">
+        <div class="section-container">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Find answers to common questions about our conversion tools</p>
             </div>
             
-            <div class="max-w-3xl mx-auto">
-                <div class="space-y-6">
-                    <!-- FAQ Item 1 -->
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <button class="faq-question w-full flex justify-between items-center focus:outline-none">
-                            <span class="text-lg font-semibold">Is my data safe when I use your tools?</span>
-                            <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-answer mt-4 text-gray-600 hidden">
-                            <p>Yes, your data is completely safe. We employ enterprise-grade encryption for all file transfers. Your files are automatically deleted from our servers after processing or within 24 hours. We never access the content of your documents or share them with third parties.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- FAQ Item 2 -->
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <button class="faq-question w-full flex justify-between items-center focus:outline-none">
-                            <span class="text-lg font-semibold">Do I need to create an account to use the tools?</span>
-                            <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-answer mt-4 text-gray-600 hidden">
-                            <p>No, you can use our basic tools without creating an account. However, registered users enjoy benefits like higher file size limits, no ads, saved document history, and access to premium features. Creating an account is free and takes less than a minute.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- FAQ Item 3 -->
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <button class="faq-question w-full flex justify-between items-center focus:outline-none">
-                            <span class="text-lg font-semibold">What are the file size limitations?</span>
-                            <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-answer mt-4 text-gray-600 hidden">
-                            <p>Free users can upload files up to 10MB. Premium users can upload files up to 100MB, while Business plan users can work with files up to 500MB. If you need higher limits, please contact our support team for a custom solution.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- FAQ Item 4 -->
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <button class="faq-question w-full flex justify-between items-center focus:outline-none">
-                            <span class="text-lg font-semibold">How accurate are your PDF to Word/Excel conversions?</span>
-                            <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-answer mt-4 text-gray-600 hidden">
-                            <p>Our conversion tools use advanced algorithms to maintain high accuracy. For most standard documents, our tools preserve formatting, tables, images, and text positioning with excellent precision. Complex layouts may occasionally require minor adjustments after conversion. Premium users get access to our enhanced conversion engine with even higher accuracy.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- FAQ Item 5 -->
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <button class="faq-question w-full flex justify-between items-center focus:outline-none">
-                            <span class="text-lg font-semibold">Can I use the tools on my mobile device?</span>
-                            <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-answer mt-4 text-gray-600 hidden">
-                            <p>Yes, our platform is fully responsive and works on all modern devices including smartphones and tablets. You can upload, process, and download files directly from your mobile browser without needing to install any apps.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- FAQ Item 6 -->
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <button class="faq-question w-full flex justify-between items-center focus:outline-none">
-                            <span class="text-lg font-semibold">How secure is the password protection feature?</span>
-                            <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-answer mt-4 text-gray-600 hidden">
-                            <p>We use industry-standard 256-bit AES encryption for password-protected PDFs. This is the same level of security used by financial institutions and government agencies. It's highly secure against unauthorized access, provided you choose a strong password and keep it confidential.</p>
-                        </div>
-                    </div>
+            <div class="max-w-3xl mx-auto divide-y divide-gray-200">
+                <div class="py-5">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-semibold cursor-pointer list-none">
+                            <span>Are the file conversions free to use?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-3">
+                            Basic conversions are completely free. We offer premium features for subscribers with larger file sizes, batch conversions, and priority processing.
+                        </p>
+                    </details>
                 </div>
-            </div>
-            
-            <div class="text-center mt-10">
-                <p class="text-gray-600 mb-4">Can't find the answer you're looking for?</p>
-                <a href="#contact" class="text-indigo-600 font-medium hover:text-indigo-800">Contact our support team <i class="fas fa-arrow-right ml-1"></i></a>
+                
+                <div class="py-5">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-semibold cursor-pointer list-none">
+                            <span>Is my data safe when I use these conversion tools?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-3">
+                            Yes, your data is 100% safe. We use secure connections, and all uploaded files are automatically deleted from our servers after the conversion process or after 24 hours, whichever comes first.
+                        </p>
+                    </details>
+                </div>
+                
+                <div class="py-5">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-semibold cursor-pointer list-none">
+                            <span>What's the maximum file size I can convert?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-3">
+                            Free users can convert files up to 100MB in size. Premium users can convert files up to 2GB with our enterprise plan supporting even larger files.
+                        </p>
+                    </details>
+                </div>
+                
+                <div class="py-5">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-semibold cursor-pointer list-none">
+                            <span>Do I need to create an account to use the tools?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-3">
+                            No, you can use our basic conversion tools without creating an account. However, creating an account gives you access to conversion history, saved files, and additional features.
+                        </p>
+                    </details>
+                </div>
+                
+                <div class="py-5">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-semibold cursor-pointer list-none">
+                            <span>How long does the conversion process take?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-3">
+                            Most conversions are completed within seconds or minutes, depending on the file size and complexity. Large video files may take longer to process.
+                        </p>
+                    </details>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Ad Banner -->
-    <div class="ad-container py-4 bg-white">
-        <!-- Google AdSense -->
-        <div class="mx-auto max-w-4xl">
-            <div class="bg-gray-200 text-center p-4 rounded">
-                <span class="text-xs text-gray-500 uppercase">Advertisement</span>
-                <div id="adsense-rectangle">
-                    <!-- Replace with your AdSense code -->
-                    <div class="py-12 text-gray-400">Google AdSense Rectangle (300×250)</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- CTA Section -->
-    <section class="py-16 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
-            <p class="text-lg text-indigo-100 mb-8 max-w-2xl mx-auto">Join thousands of satisfied users who trust our tools for their PDF needs. Try our platform for free today.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <button onclick="openModal('signupModal')" class="btn bg-white text-indigo-600 hover:bg-gray-100">
-                    Create Free Account
-                </button>
-                <a href="#tools" class="btn bg-transparent border border-white text-white hover:bg-white hover:text-indigo-600">
-                    Try Without Account
+    <section class="py-12 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <div class="section-container text-center">
+            <h2 class="text-3xl font-bold mb-6">Start Converting Your Files Now</h2>
+            <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                Access all our powerful conversion tools for free. No registration required to get started.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#tools" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105">
+                    Try It Free
+                </a>
+                <a href="#" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition transform hover:scale-105">
+                    Upgrade to Premium
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Column 1 -->
-                <div>
-                    <div class="flex items-center space-x-2 mb-6">
-                        <i class="fas fa-file-pdf text-2xl text-indigo-400"></i>
-                        <span class="text-xl font-bold">PDF<span class="text-indigo-400">Tools</span></span>
-                    </div>
-                    <p class="text-gray-400 mb-6">The complete toolkit for all your PDF needs. Convert, edit, secure, and organize your documents with ease.</p>
+    <footer class="bg-gray-800 text-gray-300">
+        <div class="section-container py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="flex items-center mb-4">
+                        <i class="fas fa-exchange-alt text-indigo-400 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-white">ConvertAll</span>
+                    </a>
+                    <p class="mb-4">
+                        Professional file conversion tools for all your document, video, image, and audio needs.
+                    </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition">
+                        <a href="#" class="text-gray-400 hover:text-white">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
+                        <a href="#" class="text-gray-400 hover:text-white">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
+                        <a href="#" class="text-gray-400 hover:text-white">
                             <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
                 </div>
                 
-                <!-- Column 2 -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-6">PDF Tools</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">PDF Converter</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">PDF Editor</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Merge PDF</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Split PDF</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Compress PDF</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">PDF Security</a></li>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Tools</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#pdf" class="hover:text-white">PDF Tools</a></li>
+                        <li><a href="#video" class="hover:text-white">Video Converter</a></li>
+                        <li><a href="#image" class="hover:text-white">Image Tools</a></li>
+                        <li><a href="#audio" class="hover:text-white">Audio Converter</a></li>
+                        <li><a href="#" class="hover:text-white">All Tools</a></li>
                     </ul>
                 </div>
                 
-                <!-- Column 3 -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-6">Company</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Press</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Partners</a></li>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-white">API Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">Developer Resources</a></li>
                     </ul>
                 </div>
                 
-                <!-- Column 4 -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-6">Support</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Help Center</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Cookie Policy</a></li>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                        <li><a href="#" class="hover:text-white">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-gray-700 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 mb-4 md:mb-0">© 2023 PDFTools. All rights reserved.</p>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Cookie Policy</a>
-                </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-sm text-center">
+                <p>&copy; 2023 ConvertAll. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold">Log In</h3>
-                <button onclick="closeModal('loginModal')" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form id="loginForm">
-                <div class="mb-4">
-                    <label for="loginEmail" class="block text-gray-700 mb-2">Email</label>
-                    <input type="email" id="loginEmail" class="form-input" placeholder="Your email" required>
-                </div>
-                <div class="mb-6">
-                    <label for="loginPassword" class="block text-gray-700 mb-2">Password</label>
-                    <input type="password" id="loginPassword" class="form-input" placeholder="Your password" required>
-                </div>
-                <div class="flex justify-between items-center mb-6">
-                    <label class="flex items-center">
-                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600">
-                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                    <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">Forgot password?</a>
-                </div>
-                <button type="submit" class="btn btn-primary w-full mb-4">Log In</button>
-                <div class="text-center">
-                    <span class="text-gray-600 text-sm">Don't have an account?</span>
-                    <a href="#" onclick="switchModal('loginModal', 'signupModal')" class="text-sm text-indigo-600 hover:text-indigo-800 ml-1">Sign Up</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Signup Modal -->
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold">Create Account</h3>
-                <button onclick="closeModal('signupModal')" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form id="signupForm">
-                <div class="mb-4">
-                    <label for="signupName" class="block text-gray-700 mb-2">Full Name</label>
-                    <input type="text" id="signupName" class="form-input" placeholder="Your name" required>
-                </div>
-                <div class="mb-4">
-                    <label for="signupEmail" class="block text-gray-700 mb-2">Email</label>
-                    <input type="email" id="signupEmail" class="form-input" placeholder="Your email" required>
-                </div>
-                <div class="mb-4">
-                    <label for="signupPassword" class="block text-gray-700 mb-2">Password</label>
-                    <input type="password" id="signupPassword" class="form-input" placeholder="Create password" required>
-                </div>
-                <div class="mb-6">
-                    <label for="signupConfirmPassword" class="block text-gray-700 mb-2">Confirm Password</label>
-                    <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" required>
-                </div>
-                <div class="mb-6">
-                    <label class="flex items-center">
-                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600" required>
-                        <span class="ml-2 text-sm text-gray-600">I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-800">Terms of Service</a> and <a href="#" class="text-indigo-600 hover:text-indigo-800">Privacy Policy</a></span>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary w-full mb-4">Create Account</button>
-                <div class="text-center">
-                    <span class="text-gray-600 text-sm">Already have an account?</span>
-                    <a href="#" onclick="switchModal('signupModal', 'loginModal')" class="text-sm text-indigo-600 hover:text-indigo-800 ml-1">Log In</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- User Dashboard (Hidden initially) -->
-    <div id="userDashboard" class="hidden">
-        <div class="bg-gray-100 min-h-screen">
-            <!-- Dashboard Header -->
-            <header class="bg-white shadow-sm sticky top-0 z-30">
-                <div class="container mx-auto px-4">
-                    <div class="flex justify-between items-center py-3">
-                        <div class="flex items-center">
-                            <a href="#" class="flex items-center space-x-2">
-                                <i class="fas fa-file-pdf text-2xl text-indigo-600"></i>
-                                <span class="text-xl font-bold text-gray-800">PDF<span class="text-indigo-600">Tools</span></span>
-                            </a>
-                        </div>
-                        
-                        <div class="flex items-center space-x-6">
-                            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Tools</a>
-                            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">My Files</a>
-                            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Upgrade</a>
-                            
-                            <!-- User Menu -->
-                            <div class="dropdown">
-                                <button class="flex items-center space-x-2">
-                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-8 h-8 rounded-full">
-                                    <span class="text-gray-700">John Doe</span>
-                                    <i class="fas fa-chevron-down text-gray-500 text-xs"></i>
-                                </button>
-                                <div class="dropdown-menu bg-white shadow-lg rounded-md py-2 mt-1 right-0 left-auto">
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
-                                        <i class="fas fa-user mr-2 text-gray-500"></i> Profile
-                                    </a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
-                                        <i class="fas fa-cog mr-2 text-gray-500"></i> Settings
-                                    </a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
-                                        <i class="fas fa-question-circle mr-2 text-gray-500"></i> Help
-                                    </a>
-                                    <div class="border-t border-gray-200 my-1"></div>
-                                    <a href="#" onclick="logoutUser()" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
-                                        <i class="fas fa-sign-out-alt mr-2 text-gray-500"></i> Log Out
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Dashboard Content -->
-            <div class="container mx-auto px-4 py-8">
-                <!-- Welcome Banner -->
-                <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-                    <div class="flex flex-col md:flex-row justify-between items-center">
-                        <div>
-                            <h2 class="text-2xl font-bold mb-2">Welcome back, John!</h2>
-                            <p class="text-gray-600">You have used 35% of your storage. <a href="#" class="text-indigo-600 hover:text-indigo-800">Upgrade now</a> for more space.</p>
-                        </div>
-                        <div class="mt-4 md:mt-0">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-upload mr-2"></i> Upload New Files
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Tools Shortcuts -->
-                <h3 class="text-lg font-semibold mb-4">Quick Tools</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                    <a href="#" class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center text-center hover:shadow-md transition">
-                        <div class="bg-indigo-100 rounded-full p-3 mb-3">
-                            <i class="fas fa-exchange-alt text-indigo-600 text-xl"></i>
-                        </div>
-                        <span class="font-medium">Convert PDF</span>
-                    </a>
-                    <a href="#" class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center text-center hover:shadow-md transition">
-                        <div class="bg-indigo-100 rounded-full p-3 mb-3">
-                            <i class="fas fa-object-ungroup text-indigo-600 text-xl"></i>
-                        </div>
-                        <span class="font-medium">Merge PDFs</span>
-                    </a>
-                    <a href="#" class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center text-center hover:shadow-md transition">
-                        <div class="bg-indigo-100 rounded-full p-3 mb-3">
-                            <i class="fas fa-compress text-indigo-600 text-xl"></i>
-                        </div>
-                        <span class="font-medium">Compress PDF</span>
-                    </a>
-                    <a href="#" class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center text-center hover:shadow-md transition">
-                        <div class="bg-indigo-100 rounded-full p-3 mb-3">
-                            <i class="fas fa-lock text-indigo-600 text-xl"></i>
-                        </div>
-                        <span class="font-medium">Protect PDF</span>
-                    </a>
-                </div>
-                
-                <!-- Recent Files -->
-                <h3 class="text-lg font-semibold mb-4">Recent Files</h3>
-                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
-                    <table class="min-w-full">
-                        <thead>
-                            <tr class="bg-gray-50 border-b">
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Modified</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-file-pdf text-red-500 mr-3"></i>
-                                        <span class="font-medium">Business_Report.pdf</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">PDF</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">2.3 MB</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">Today, 10:30 AM</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right">
-                                    <button class="text-gray-500 hover:text-indigo-600 mx-1">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="text-gray-500 hover:text-indigo-600 mx-1">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="text-gray-500 hover:text-red-600 mx-1">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-file-word text-blue-500 mr-3"></i>
-                                        <span class="font-medium">Contract_Draft.docx</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">DOCX</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">1.5 MB</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">Yesterday, 4:15 PM</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right">
-                                    <button class="text-gray-500 hover:text-indigo-600 mx-1">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="text-gray-500 hover:text-indigo-600 mx-1">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="text-gray-500 hover:text-red-600 mx-1">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-file-pdf text-red-500 mr-3"></i>
-                                        <span class="font-medium">Financial_Statement.pdf</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">PDF</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">3.8 MB</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-500">Jun 15, 2023</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right">
-                                    <button class="text-gray-500 hover:text-indigo-600 mx-1">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="text-gray-500 hover:text-indigo-600 mx-1">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="text-gray-500 hover:text-red-600 mx-1">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Storage Usage -->
-                <h3 class="text-lg font-semibold mb-4">Storage Usage</h3>
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <div class="mb-4">
-                        <div class="flex justify-between mb-2">
-                            <span>3.5 GB used of 10 GB</span>
-                            <span class="font-semibold">35%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 35%"></div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="p-4 bg-gray-50 rounded-md">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                                <span class="font-medium">PDF Files</span>
-                            </div>
-                            <div class="mt-2">
-                                <span class="text-xl font-semibold">2.1 GB</span>
-                                <span class="text-gray-500 text-sm ml-2">60%</span>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-md">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                <span class="font-medium">Word Documents</span>
-                            </div>
-                            <div class="mt-2">
-                                <span class="text-xl font-semibold">0.8 GB</span>
-                                <span class="text-gray-500 text-sm ml-2">23%</span>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-md">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                                <span class="font-medium">Other Files</span>
-                            </div>
-                            <div class="mt-2">
-                                <span class="text-xl font-semibold">0.6 GB</span>
-                                <span class="text-gray-500 text-sm ml-2">17%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tool Demo: PDF to Word -->
-    <div id="pdfToWordTool" class="hidden">
-        <div class="bg-gray-100 min-h-screen">
-            <!-- Tool Header -->
-            <header class="bg-white shadow-sm sticky top-0 z-30">
-                <div class="container mx-auto px-4">
-                    <div class="flex justify-between items-center py-3">
-                        <div class="flex items-center">
-                            <a href="#" onclick="goToHomepage()" class="flex items-center space-x-2">
-                                <i class="fas fa-file-pdf text-2xl text-indigo-600"></i>
-                                <span class="text-xl font-bold text-gray-800">PDF<span class="text-indigo-600">Tools</span></span>
-                            </a>
-                            <span class="mx-3 text-gray-300">/</span>
-                            <span class="text-gray-600">Convert PDF to Word</span>
-                        </div>
-                        
-                        <div class="flex items-center space-x-6">
-                            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Tools</a>
-                            <button id="loginBtnHeader" class="hidden md:block btn btn-outline">Log in</button>
-                            <button id="signupBtnHeader" class="hidden md:block btn btn-primary">Sign up</button>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Tool Content -->
-            <div class="container mx-auto px-4 py-8">
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl font-bold mb-4">Convert PDF to Word</h1>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Transform your PDF documents to fully editable Word files while preserving the original formatting.</p>
-                </div>
-                
-                <div class="max-w-4xl mx-auto">
-                    <!-- Step 1: Upload -->
-                    <div id="uploadStep" class="bg-white rounded-xl shadow-md p-8 mb-8">
-                        <h3 class="text-xl font-bold mb-6 text-center">Upload your PDF file</h3>
-                        <div class="upload-area">
-                            <i class="fas fa-cloud-upload-alt text-5xl text-indigo-500 mb-4"></i>
-                            <h3 class="text-xl font-semibold mb-3">Drop PDF here</h3>
-                            <p class="text-gray-500 mb-4">or click to browse files</p>
-                            <input type="file" accept=".pdf" multiple class="hidden" id="pdfInput" />
-                            <button onclick="document.getElementById('pdfInput').click()" class="btn btn-primary">Select File</button>
-                            <p class="mt-4 text-sm text-gray-500">Maximum file size: 100MB</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2: Options (Hidden initially) -->
-                    <div id="optionsStep" class="hidden bg-white rounded-xl shadow-md p-8 mb-8">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold">Conversion Options</h3>
-                            <button class="text-indigo-600 hover:text-indigo-800" onclick="showUploadStep()">
-                                <i class="fas fa-arrow-left mr-1"></i> Back to upload
-                            </button>
-                        </div>
-                        
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg mb-6">
-                            <div class="flex items-center">
-                                <i class="fas fa-file-pdf text-red-500 text-2xl mr-3"></i>
-                                <div>
-                                    <p class="font-semibold">Report.pdf</p>
-                                    <p class="text-sm text-gray-500">8 pages • 2.4 MB</p>
-                                </div>
-                            </div>
-                            <button class="text-red-500 hover:text-red-700">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="space-y-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Output Format</label>
-                                <div class="flex flex-wrap gap-3">
-                                    <label class="inline-flex items-center px-4 py-2 bg-indigo-50 border border-indigo-500 rounded-md cursor-pointer">
-                                        <input type="radio" name="format" value="docx" class="hidden" checked>
-                                        <i class="far fa-file-word text-blue-600 mr-2"></i> Word (DOCX)
-                                    </label>
-                                    <label class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md cursor-pointer">
-                                        <input type="radio" name="format" value="doc" class="hidden">
-                                        <i class="far fa-file-word text-blue-600 mr-2"></i> Word (DOC)
-                                    </label>
-                                    <label class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md cursor-pointer">
-                                        <input type="radio" name="format" value="rtf" class="hidden">
-                                        <i class="far fa-file-alt text-gray-600 mr-2"></i> Rich Text (RTF)
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Conversion Settings</label>
-                                <div class="space-y-3">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" checked>
-                                        <span class="ml-2 text-gray-700">Preserve formatting</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" checked>
-                                        <span class="ml-2 text-gray-700">Extract images</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600">
-                                        <span class="ml-2 text-gray-700">OCR (detect text in images)</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Page Range</label>
-                                <div class="flex items-center">
-                                    <label class="inline-flex items-center mr-6">
-                                        <input type="radio" name="pageRange" value="all" class="form-radio h-4 w-4 text-indigo-600" checked>
-                                        <span class="ml-2 text-gray-700">All pages</span>
-                                    </label>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" name="pageRange" value="custom" class="form-radio h-4 w-4 text-indigo-600">
-                                        <span class="ml-2 text-gray-700">Custom range</span>
-                                    </label>
-                                    <input type="text" placeholder="e.g. 1-3, 5, 7-9" class="ml-3 w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8 flex justify-end">
-                            <button class="btn btn-primary" onclick="showProcessingStep()">
-                                <i class="fas fa-cog mr-2"></i> Convert to Word
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3: Processing (Hidden initially) -->
-                    <div id="processingStep" class="hidden bg-white rounded-xl shadow-md p-8 mb-8 text-center">
-                        <i class="fas fa-spinner fa-spin text-5xl text-indigo-500 mb-6"></i>
-                        <h3 class="text-xl font-bold mb-3">Converting your PDF...</h3>
-                        <p class="text-gray-600 mb-8">Please wait while we convert your file. This may take a few moments.</p>
-                        
-                        <div class="max-w-md mx-auto">
-                            <div class="mb-2 flex justify-between">
-                                <span>Processing pages</span>
-                                <span>50%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 50%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 4: Download (Hidden initially) -->
-                    <div id="downloadStep" class="hidden bg-white rounded-xl shadow-md p-8 mb-8">
-                        <div class="text-center mb-8">
-                            <div class="inline-flex items-center justify-center h-20 w-20 rounded-full bg-green-100 mb-6">
-                                <i class="fas fa-check text-4xl text-green-600"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Conversion Complete!</h3>
-                            <p class="text-gray-600">Your PDF has been successfully converted to a Word document.</p>
-                        </div>
-                        
-                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <i class="far fa-file-word text-blue-600 text-2xl mr-3"></i>
-                                    <div>
-                                        <p class="font-semibold">Report.docx</p>
-                                        <p class="text-sm text-gray-500">2.1 MB • DOCX format</p>
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary">
-                                    <i class="fas fa-download mr-2"></i> Download
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="flex justify-between items-center">
-                            <button class="text-indigo-600 hover:text-indigo-800" onclick="showUploadStep()">
-                                <i class="fas fa-redo mr-1"></i> Convert Another File
-                            </button>
-                            
-                            <div>
-                                <p class="text-sm text-gray-500 mb-2">Share this result:</p>
-                                <div class="flex space-x-3">
-                                    <a href="#" class="text-gray-500 hover:text-indigo-600">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="text-gray-500 hover:text-indigo-600">
-                                        <i class="fab fa-facebook"></i>
-                                    </a>
-                                    <a href="#" class="text-gray-500 hover:text-indigo-600">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                    <a href="#" class="text-gray-500 hover:text-indigo-600">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Related Tools -->
-                    <div class="mt-12">
-                        <h3 class="text-xl font-bold mb-6 text-center">You might also need</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <a href="#" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition flex flex-col items-center text-center">
-                                <i class="fas fa-file-pdf text-indigo-600 text-2xl mb-3"></i>
-                                <h4 class="font-semibold mb-2">Word to PDF</h4>
-                                <p class="text-sm text-gray-600">Convert Word documents back to PDF format</p>
-                            </a>
-                            <a href="#" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition flex flex-col items-center text-center">
-                                <i class="fas fa-compress-arrows-alt text-indigo-600 text-2xl mb-3"></i>
-                                <h4 class="font-semibold mb-2">Compress PDF</h4>
-                                <p class="text-sm text-gray-600">Reduce the file size of your PDF documents</p>
-                            </a>
-                            <a href="#" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition flex flex-col items-center text-center">
-                                <i class="fas fa-object-group text-indigo-600 text-2xl mb-3"></i>
-                                <h4 class="font-semibold mb-2">Merge PDFs</h4>
-                                <p class="text-sm text-gray-600">Combine multiple PDF files into one document</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
     <script>
-        // Toggle Mobile Menu
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('mobileMenu').classList.toggle('active');
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         });
         
-        // Modal Functions
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-        }
-        
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            document.body.style.overflow = ''; // Enable scrolling
-        }
-        
-        function switchModal(closeId, openId) {
-            closeModal(closeId);
-            openModal(openId);
-        }
-        
-        // Handle login/signup buttons
-        document.getElementById('loginBtn').addEventListener('click', function() {
-            openModal('loginModal');
+        // Tab switching functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                button.classList.add('active');
+                const target = button.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+            });
         });
         
-        document.getElementById('signupBtn').addEventListener('click', function() {
-            openModal('signupModal');
-        });
-        
-        document.getElementById('getStartedBtn').addEventListener('click', function() {
-            openModal('signupModal');
-        });
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-                document.body.style.overflow = ''; // Enable scrolling
+        // Upload area interactivity
+        document.querySelectorAll('.upload-area').forEach(area => {
+            area.addEventListener('click', () => {
+                const input = area.querySelector('input[type="file"]');
+                if (input) input.click();
+            });
+            
+            const input = area.querySelector('input[type="file"]');
+            if (input) {
+                input.addEventListener('change', () => {
+                    if (input.files.length > 0) {
+                        const fileNameElement = document.createElement('p');
+                        fileNameElement.classList.add('text-sm', 'text-indigo-600', 'mt-2');
+                        fileNameElement.textContent = input.files.length > 1 
+                            ? `${input.files.length} files selected` 
+                            : `Selected: ${input.files[0].name}`;
+                        
+                        // Remove previous file name if exists
+                        const previousFileName = area.querySelector('.text-indigo-600');
+                        if (previousFileName) {
+                            area.removeChild(previousFileName);
+                        }
+                        
+                        area.appendChild(fileNameElement);
+                    }
+                });
             }
-        }
-        
-        // Form submissions
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Simulate login
-            simulateLogin();
         });
         
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Simulate signup
-            simulateLogin();
-        });
-        
-        function simulateLogin() {
-            closeModal('loginModal');
-            closeModal('signupModal');
-            // Show dashboard (normally would redirect to dashboard)
-            document.getElementById('userDashboard').classList.remove('hidden');
-            document.querySelector('header').classList.add('hidden');
-            document.querySelector('main').classList.add('hidden');
-            document.querySelector('footer').classList.add('hidden');
-        }
-        
-        function logoutUser() {
-            // Hide dashboard
-            document.getElementById('userDashboard').classList.add('hidden');
-            document.querySelector('header').classList.remove('hidden');
-            document.querySelector('main').classList.remove('hidden');
-            document.querySelector('footer').classList.remove('hidden');
-        }
-        
-        // File list toggle for merge tool demo
-        document.getElementById('mergeFileInput').addEventListener('change', function() {
-            document.getElementById('filesList').classList.remove('hidden');
-        });
-        
-        // FAQ Toggle
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', () => {
-                const answer = question.nextElementSibling;
-                const icon = question.querySelector('i');
-                
-                // Toggle answer
-                answer.classList.toggle('hidden');
-                
-                // Rotate icon
-                if (answer.classList.contains('hidden')) {
-                    icon.style.transform = 'rotate(0)';
-                } else {
-                    icon.style.transform = 'rotate(180deg)';
+        // Add drag and drop functionality
+        document.querySelectorAll('.upload-area').forEach(area => {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                area.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                area.addEventListener(eventName, () => {
+                    area.classList.add('bg-indigo-50');
+                    area.style.borderColor = '#4f46e5';
+                });
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                area.addEventListener(eventName, () => {
+                    area.classList.remove('bg-indigo-50');
+                    area.style.borderColor = '#CBD5E0';
+                });
+            });
+            
+            area.addEventListener('drop', (e) => {
+                const input = area.querySelector('input[type="file"]');
+                if (input) {
+                    input.files = e.dataTransfer.files;
+                    
+                    // Trigger change event
+                    const event = new Event('change', { bubbles: true });
+                    input.dispatchEvent(event);
                 }
             });
         });
         
-        // PDF to Word Tool Steps
-        function showUploadStep() {
-            document.getElementById('uploadStep').classList.remove('hidden');
-            document.getElementById('optionsStep').classList.add('hidden');
-            document.getElementById('processingStep').classList.add('hidden');
-            document.getElementById('downloadStep').classList.add('hidden');
-        }
-        
-        function showOptionsStep() {
-            document.getElementById('uploadStep').classList.add('hidden');
-            document.getElementById('optionsStep').classList.remove('hidden');
-            document.getElementById('processingStep').classList.add('hidden');
-            document.getElementById('downloadStep').classList.add('hidden');
-        }
-        
-        function showProcessingStep() {
-            document.getElementById('uploadStep').classList.add('hidden');
-            document.getElementById('optionsStep').classList.add('hidden');
-            document.getElementById('processingStep').classList.remove('hidden');
-            document.getElementById('downloadStep').classList.add('hidden');
-            
-            // Simulate processing
-            let progress = 0;
-            const progressBar = document.querySelector('.progress-bar');
-            const progressText = document.querySelector('#processingStep .flex.justify-between span:last-child');
-            
-            const interval = setInterval(() => {
-                progress += 10;
-                progressBar.style.width = progress + '%';
-                progressText.textContent = progress + '%';
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        showDownloadStep();
-                    }, 500);
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if it's open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
                 }
-            }, 500);
-        }
-        
-        function showDownloadStep() {
-            document.getElementById('uploadStep').classList.add('hidden');
-            document.getElementById('optionsStep').classList.add('hidden');
-            document.getElementById('processingStep').classList.add('hidden');
-            document.getElementById('downloadStep').classList.remove('hidden');
-        }
-        
-        // Simulate file upload
-        document.getElementById('pdfInput').addEventListener('change', function() {
-            if (this.files.length > 0) {
-                showOptionsStep();
-            }
-        });
-        
-        // Go to homepage
-        function goToHomepage() {
-            document.getElementById('pdfToWordTool').classList.add('hidden');
-            document.querySelector('header').classList.remove('hidden');
-            document.querySelector('main').classList.remove('hidden');
-            document.querySelector('footer').classList.remove('hidden');
-        }
-        
-        // Initialize AdSense (placeholder)
-        window.addEventListener('load', function() {
-            // This would be replaced with actual AdSense code
-            console.log('AdSense initialized');
+            });
         });
     </script>
 </body>
